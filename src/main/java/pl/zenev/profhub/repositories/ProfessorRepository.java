@@ -5,6 +5,8 @@ import pl.zenev.profhub.models.Professor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class ProfessorRepository {
 
@@ -16,5 +18,9 @@ public class ProfessorRepository {
 
     public List<Professor> getAllProfessors(){
         return dataStorage.professors;
+    }
+
+    public Optional<Professor> getProfessorById(UUID uuid) {
+        return dataStorage.professors.stream().filter(professor -> professor.getId().equals(uuid)).findFirst();
     }
 }
