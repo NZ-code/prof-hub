@@ -10,6 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Getter
+@Setter
 public class Professor {
     public Professor(String name, int age) {
         this.name = name;
@@ -17,18 +19,18 @@ public class Professor {
         this.finishedLectures = new ArrayList<>();
         this.id = UUID.randomUUID();
     }
-    @Getter
-    @Setter
+
     private UUID id;
 
-    @Getter
-    @Setter
+
     private String name;
-    @Getter
-    @Setter
+
     private int age;
-    @Getter
-    @Setter
+
     private List<Lecture> finishedLectures;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private byte[] picture;
 
 }

@@ -22,6 +22,7 @@ public class HelloServlet extends HttpServlet {
     private static final Pattern UUID = Pattern.compile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
     public static final Pattern PROFESSORS_PATTERN = Pattern.compile("/professors/");
     public static final Pattern PROFESSOR_PATTERN = Pattern.compile("/professors/(%s)/".formatted(UUID.pattern()));
+    public static final Pattern PROFESSOR_IMAGE_PATTERN = Pattern.compile("/professors/(%s)/image/".formatted(UUID.pattern()));
     private final Jsonb jsonb = JsonbBuilder.create();
     private ProfessorsController professorsController;
     private String message;
@@ -37,14 +38,22 @@ public class HelloServlet extends HttpServlet {
         String path = parseRequestPath(request);
         //  getProfessorsResponse
         PrintWriter out = response.getWriter();
+
         if(path.matches(PROFESSORS_PATTERN.pattern())){
             GetProfessorsResponse getProfessorsResponse = professorsController.getAllProfessors();
             out.write(jsonb.toJson(getProfessorsResponse));
         }
-        if(path.matches(PROFESSOR_PATTERN.pattern())){
+        else if(path.matches(PROFESSOR_PATTERN.pattern())){
             UUID uuid = extractUuid(PROFESSOR_PATTERN, path);
             GetProfessorResponse getProfessorResponse = professorsController.getProfessorById(uuid);
             out.write(jsonb.toJson(getProfessorResponse));
+        }
+        else if(path.matches(PROFESSOR_IMAGE_PATTERN.pattern())){
+            response.setContentType("image/png");
+            UUID uuid = extractUuid(PROFESSOR_IMAGE_PATTERN, path);
+            byte[] image = professorsController.getImage(uuid);
+            response.setContentLength(image.length);
+            response.getOutputStream().write(image);
         }
 
 

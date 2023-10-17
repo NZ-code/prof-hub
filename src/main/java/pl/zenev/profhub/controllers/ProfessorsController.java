@@ -27,4 +27,8 @@ public class ProfessorsController {
         }
         return getProfessorResponse;
     }
+
+    public byte[] getImage(UUID uuid) {
+        return professorService.getProfessorImage(uuid);
+    }
 }

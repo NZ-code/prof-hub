@@ -23,4 +23,25 @@ public class ProfessorRepository {
     public Optional<Professor> getProfessorById(UUID uuid) {
         return dataStorage.professors.stream().filter(professor -> professor.getId().equals(uuid)).findFirst();
     }
+
+    public void update(Professor professor) {
+        if(dataStorage.professors.removeIf(professorStored -> professorStored.getId().equals(professor.getId()))){
+            dataStorage.professors.add(professor);
+        }
+        else{
+            throw new IllegalArgumentException("The professor with id \"%s\" does not exist".formatted(professor.getId()));
+        }
+
+    }
+
+    public byte[] getImage(UUID uuid) {
+        Optional<Professor> professorOpt = getProfessorById(uuid);
+        if(professorOpt.isPresent()){
+            return professorOpt.get().getPicture();
+        }
+        else{
+            throw new IllegalArgumentException("The professor with id \"%s\" does not exist".formatted(uuid));
+        }
+
+    }
 }
