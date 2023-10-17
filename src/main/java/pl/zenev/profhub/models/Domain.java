@@ -1,4 +1,4 @@
-package org.example.models;
+package pl.zenev.profhub.models;
 
 public enum Domain {
     MATH,

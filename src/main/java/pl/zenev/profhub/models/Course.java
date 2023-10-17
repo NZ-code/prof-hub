@@ -1,4 +1,4 @@
-package org.example.models;
+package pl.zenev.profhub.models;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package org.example.models;
+package pl.zenev.profhub.models;
 
 public class Lecture {
     private float lengthInMinutes;
