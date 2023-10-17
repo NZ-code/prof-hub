@@ -13,6 +13,11 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Professor {
+    public Professor(String name, int age, UUID uuid) {
+        this.name = name;
+        this.age = age;
+        this.id = uuid;
+    }
     public Professor(String name, int age) {
         this.name = name;
         this.age = age;
