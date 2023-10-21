@@ -26,7 +26,11 @@ public class ProfessorService {
     public void updatePortrait(UUID id, InputStream is) {
         professorRepository.getProfessorById(id).ifPresent(professor -> {
             try {
+
                 professor.setPicture(is.readAllBytes());
+                System.out.println("Picture set");
+                byte[] picture = professor.getPicture();
+                System.out.println(picture.length);
                 professorRepository.update(professor);
             } catch (IOException ex) {
                 throw new IllegalStateException(ex);

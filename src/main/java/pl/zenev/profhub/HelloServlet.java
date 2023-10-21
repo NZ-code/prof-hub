@@ -16,7 +16,7 @@ import pl.zenev.profhub.dto.GetProfessorsResponse;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@MultipartConfig(maxFileSize = 200 * 1024)
 @WebServlet(name = "helloServlet", value = "/api/*")
 public class HelloServlet extends HttpServlet {
     private static final Pattern UUID = Pattern.compile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
@@ -35,21 +35,28 @@ public class HelloServlet extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = parseRequestPath(request);
         if (path.matches(PROFESSOR_IMAGE_PATTERN.pattern())) {
+            System.out.println("Image matches the pattern");
             UUID uuid = extractUuid(PROFESSOR_IMAGE_PATTERN, path);
+            System.out.println("UUID extracted");
             professorsController.putImage(uuid, request.getPart("image").getInputStream() );
+
         }
     }
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
+
         String path = parseRequestPath(request);
         //  getProfessorsResponse
-        PrintWriter out = response.getWriter();
+
 
         if(path.matches(PROFESSORS_PATTERN.pattern())){
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
             GetProfessorsResponse getProfessorsResponse = professorsController.getAllProfessors();
             out.write(jsonb.toJson(getProfessorsResponse));
         }
         else if(path.matches(PROFESSOR_PATTERN.pattern())){
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
             UUID uuid = extractUuid(PROFESSOR_PATTERN, path);
             GetProfessorResponse getProfessorResponse = professorsController.getProfessorById(uuid);
             out.write(jsonb.toJson(getProfessorResponse));
@@ -60,6 +67,7 @@ public class HelloServlet extends HttpServlet {
             byte[] image = professorsController.getImage(uuid);
             response.setContentLength(image.length);
             response.getOutputStream().write(image);
+
         }
 
 
