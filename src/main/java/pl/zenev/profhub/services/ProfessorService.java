@@ -1,5 +1,8 @@
 package pl.zenev.profhub.services;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import pl.zenev.profhub.models.Professor;
 import pl.zenev.profhub.repositories.ProfessorRepository;
 
@@ -9,9 +12,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class ProfessorService {
     private ProfessorRepository professorRepository;
-
+    @Inject
     public ProfessorService(ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
     }

@@ -6,11 +6,11 @@ import jakarta.servlet.annotation.WebListener;
 import pl.zenev.profhub.controllers.ProfessorsController;
 import pl.zenev.profhub.services.ProfessorService;
 
-@WebListener
-public class CreateDataSources implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        DataStorage dataStorage = new DataStorage();
-        event.getServletContext().setAttribute("dataStorage", dataStorage);
-    }
-}
+//@WebListener
+//public class CreateDataSources implements ServletContextListener {
+//    DataStorage dataStorage;
+//    @Override
+//    public void contextInitialized(ServletContextEvent event) {
+//        event.getServletContext().setAttribute("dataStorage", dataStorage);
+//    }
+//}

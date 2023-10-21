@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -24,14 +25,18 @@ public class HelloServlet extends HttpServlet {
     public static final Pattern PROFESSOR_PATTERN = Pattern.compile("/professors/(%s)".formatted(UUID.pattern()));
     public static final Pattern PROFESSOR_IMAGE_PATTERN = Pattern.compile("/professors/(%s)/image".formatted(UUID.pattern()));
     private final Jsonb jsonb = JsonbBuilder.create();
-    private ProfessorsController professorsController;
     private String message;
-
-    public void init() throws ServletException {
-        super.init();
-        professorsController = (ProfessorsController) getServletContext().getAttribute("professorController");
-        message = "Helo World!";
+    private ProfessorsController professorsController;
+    @Inject
+    public HelloServlet(ProfessorsController professorsController) {
+        this.professorsController = professorsController;
     }
+
+//    public void init() throws ServletException {
+//        super.init();
+//        professorsController = (ProfessorsController) getServletContext().getAttribute("professorController");
+//        message = "Helo World!";
+//    }
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = parseRequestPath(request);
         if (path.matches(PROFESSOR_IMAGE_PATTERN.pattern())) {

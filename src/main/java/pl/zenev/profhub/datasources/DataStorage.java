@@ -1,13 +1,19 @@
 package pl.zenev.profhub.datasources;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import pl.zenev.profhub.models.Professor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@ApplicationScoped
+
 public class DataStorage {
-    public List<Professor> professors = new ArrayList<>(
+    @Getter
+    private List<Professor> professors = new ArrayList<>(
     );
     public DataStorage(){
         professors.add(new Professor("Nick", 53, UUID.fromString("525d3e7b-bb1f-4c13-bf17-926d1a12e4c0")));

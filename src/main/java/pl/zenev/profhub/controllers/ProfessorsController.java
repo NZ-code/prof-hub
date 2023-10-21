@@ -1,5 +1,8 @@
 package pl.zenev.profhub.controllers;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import pl.zenev.profhub.dto.GetProfessorResponse;
 import pl.zenev.profhub.dto.GetProfessorsResponse;
 import pl.zenev.profhub.models.Professor;
@@ -9,9 +12,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
+@RequestScoped
+@NoArgsConstructor(force = true)
 public class ProfessorsController {
     private ProfessorService professorService;
+    @Inject
     public ProfessorsController(ProfessorService professorService){
         this.professorService = professorService;
     }
