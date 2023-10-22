@@ -5,18 +5,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.models.Course;
 import pl.zenev.profhub.models.Domain;
+import pl.zenev.profhub.models.Lecture;
 import pl.zenev.profhub.models.Professor;
 
 import java.util.*;
 
+@Getter
 @ApplicationScoped
 
 public class DataStorage {
-    @Getter
     private List<Professor> professors = new ArrayList<>(
     );
-    @Getter
     private List<Course> courses = new ArrayList<>(
+    );
+    private List<Lecture> lectures = new ArrayList<>(
     );
     public DataStorage(){
         // professors
@@ -37,5 +39,13 @@ public class DataStorage {
 
     public Optional<Professor> getProfessorById(UUID uuid) {
         return professors.stream().filter(professor -> professor.getId().equals(uuid)).findFirst();
+    }
+
+    public void addLecture(Lecture lecture) {
+        this.lectures.add(lecture);
+    }
+
+    public Optional<Lecture> getLecture(UUID uuid) {
+        return lectures.stream().filter(lecture -> lecture.getUuid().equals(uuid)).findFirst();
     }
 }
