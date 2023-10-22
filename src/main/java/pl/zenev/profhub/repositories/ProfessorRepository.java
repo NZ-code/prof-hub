@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RequestScoped
 @NoArgsConstructor(force = true)
-public class ProfessorRepository {
+public class ProfessorRepository implements Repository<Professor>{
 
     private DataStorage dataStorage;
     @Inject
@@ -21,13 +21,19 @@ public class ProfessorRepository {
         this.dataStorage = dataStorage;
     }
 
-    public List<Professor> getAllProfessors(){
+    public List<Professor> getAll(){
         return dataStorage.getProfessors();
     }
 
-    public Optional<Professor> getProfessorById(UUID uuid) {
-        return dataStorage.getProfessors().stream().filter(professor -> professor.getId().equals(uuid)).findFirst();
+    public Optional<Professor> getById(UUID uuid) {
+        return dataStorage.getProfessorById(uuid);
     }
+
+    @Override
+    public void add(Professor professor) {
+        dataStorage.addProfessor(professor);
+    }
+
 
     public void update(Professor professor) {
         if(dataStorage.getProfessors().removeIf(professorStored -> professorStored.getId().equals(professor.getId()))){
@@ -40,7 +46,7 @@ public class ProfessorRepository {
     }
 
     public byte[] getImage(UUID uuid) {
-        Optional<Professor> professorOpt = getProfessorById(uuid);
+        Optional<Professor> professorOpt = getById(uuid);
         if(professorOpt.isPresent()){
             return professorOpt.get().getPicture();
         }

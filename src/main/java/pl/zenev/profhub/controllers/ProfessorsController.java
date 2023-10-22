@@ -21,13 +21,13 @@ public class ProfessorsController {
         this.professorService = professorService;
     }
     public GetProfessorsResponse getAllProfessors(){
-        List<Professor> professorList = professorService.getAllProfessors();
+        List<Professor> professorList = professorService.getAll();
         return new GetProfessorsResponse(professorList);
     }
 
     public GetProfessorResponse getProfessorById(UUID uuid) {
         GetProfessorResponse getProfessorResponse = null;
-        Optional<Professor> professor = professorService.getProfessorById(uuid);
+        Optional<Professor> professor = professorService.getById(uuid);
         if(professor.isPresent()){
             getProfessorResponse = new GetProfessorResponse(professor.get());
         }

@@ -14,22 +14,28 @@ import java.util.UUID;
 
 @ApplicationScoped
 @NoArgsConstructor(force = true)
-public class ProfessorService {
+public class ProfessorService implements Service<Professor> {
     private ProfessorRepository professorRepository;
     @Inject
     public ProfessorService(ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
     }
 
-    public List<Professor> getAllProfessors(){
-        return professorRepository.getAllProfessors();
+    public List<Professor> getAll(){
+        return professorRepository.getAll();
     }
 
-    public Optional<Professor> getProfessorById(UUID uuid) {
-        return professorRepository.getProfessorById(uuid);
+    public Optional<Professor> getById(UUID uuid) {
+        return professorRepository.getById(uuid);
     }
+
+
+    public void add(Professor professor) {
+        professorRepository.add(professor);
+    }
+
     public void updatePortrait(UUID id, InputStream is) {
-        professorRepository.getProfessorById(id).ifPresent(professor -> {
+        professorRepository.getById(id).ifPresent(professor -> {
             try {
 
                 professor.setPicture(is.readAllBytes());
