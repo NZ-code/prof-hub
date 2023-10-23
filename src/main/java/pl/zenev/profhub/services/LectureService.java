@@ -15,29 +15,25 @@ import java.util.UUID;
 
 @ApplicationScoped
 @NoArgsConstructor(force = true)
-public class CourseService implements Service<Course>{
-    CourseRepository courseRepository;
+public class LectureService implements Service<Lecture>{
     LectureRepository lectureRepository;
     @Inject
-    public CourseService(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
-
-    public List<Lecture> getCourseLectures(Course course){
-        return lectureRepository.getLecturesByCourse(course);
-    }
-    @Override
-    public List<Course> getAll() {
-        return courseRepository.getAll();
+    public LectureService(LectureRepository lectureRepository) {
+        this.lectureRepository = lectureRepository;
     }
 
     @Override
-    public Optional<Course> getById(UUID uuid) {
-        return Optional.empty();
+    public List<Lecture> getAll() {
+        return lectureRepository.getAll();
     }
 
     @Override
-    public void add(Course course) {
-        courseRepository.add(course);
+    public Optional<Lecture> getById(UUID uuid) {
+        return lectureRepository.getById(uuid);
+    }
+
+    @Override
+    public void add(Lecture lecture) {
+        lectureRepository.add(lecture);
     }
 }

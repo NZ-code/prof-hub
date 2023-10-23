@@ -13,17 +13,15 @@ public class Lecture {
     private UUID uuid;
     private float lengthInMinutes;
     private String name;
-    private String professorName;
+
 
     private Course course;
     private Professor professor;
 
-    public Lecture(float lengthInMinutes, String name, String professorName, Course course, Professor professor) {
-        this.uuid = uuid;
-        this.lengthInMinutes = lengthInMinutes;
+    public Lecture( String name, Course course, float lengthInMinutes, Professor professor) {
         this.name = name;
-        this.professorName = professorName;
         this.course = course;
+        this.lengthInMinutes = lengthInMinutes;
         this.professor = professor;
         this.uuid = UUID.randomUUID();
     }

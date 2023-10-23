@@ -22,7 +22,7 @@ public class CourseRepository implements Repository<Course>{
 
     @Override
     public List<Course> getAll() {
-        return null;
+        return dataStorage.getCourses();
     }
 
     @Override

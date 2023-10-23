@@ -13,18 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Professor {
-    public Professor(String name, int age, UUID uuid) {
-        this.name = name;
-        this.age = age;
-        this.id = uuid;
-    }
-    public Professor(String name, int age) {
-        this.name = name;
-        this.age = age;
-        this.finishedLectures = new ArrayList<>();
-        this.id = UUID.randomUUID();
-    }
-
     private UUID id;
 
 
@@ -33,6 +21,22 @@ public class Professor {
     private int age;
 
     private List<Lecture> finishedLectures;
+    public Professor(String name, int age) {
+        UUID id = UUID.randomUUID();
+        this.name = name;
+        this.age = age;
+    }
+
+    public Professor(String name, int age, UUID uuid) {
+        this(name, age);
+        this.finishedLectures = new ArrayList<>();
+
+        this.id = uuid;
+
+
+    }
+
+
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
