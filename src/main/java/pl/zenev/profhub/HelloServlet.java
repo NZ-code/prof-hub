@@ -10,6 +10,7 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import jakarta.ws.rs.NotFoundException;
 import pl.zenev.profhub.controllers.ProfessorsController;
 import pl.zenev.profhub.dto.GetProfessorResponse;
 import pl.zenev.profhub.dto.GetProfessorsResponse;
@@ -37,6 +38,13 @@ public class HelloServlet extends HttpServlet {
 //        professorsController = (ProfessorsController) getServletContext().getAttribute("professorController");
 //        message = "Helo World!";
 //    }
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String path = parseRequestPath(request);
+        if (path.matches(PROFESSOR_IMAGE_PATTERN.pattern())) {
+            UUID uuid = extractUuid(PROFESSOR_IMAGE_PATTERN, path);
+            professorsController.deleteImage(uuid);
+        }
+    }
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = parseRequestPath(request);
         if (path.matches(PROFESSOR_IMAGE_PATTERN.pattern())) {
@@ -60,11 +68,23 @@ public class HelloServlet extends HttpServlet {
             out.write(jsonb.toJson(getProfessorsResponse));
         }
         else if(path.matches(PROFESSOR_PATTERN.pattern())){
-            PrintWriter out = response.getWriter();
-            response.setContentType("application/json");
             UUID uuid = extractUuid(PROFESSOR_PATTERN, path);
-            GetProfessorResponse getProfessorResponse = professorsController.getProfessorById(uuid);
-            out.write(jsonb.toJson(getProfessorResponse));
+            GetProfessorResponse getProfessorResponse = professorsController.getProfessorById(response, uuid);
+            PrintWriter out = response.getWriter();
+            if(getProfessorResponse == null){
+
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            }
+            else{
+                response.setContentType("application/json");
+                out.write(jsonb.toJson(getProfessorResponse));
+            }
+
+
+
+
+
+
         }
         else if(path.matches(PROFESSOR_IMAGE_PATTERN.pattern())){
             response.setContentType("image/png");

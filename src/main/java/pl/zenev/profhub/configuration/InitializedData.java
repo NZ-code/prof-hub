@@ -94,6 +94,6 @@ public class InitializedData {
         for (var lecture: lecturesList) {
             System.out.println(lecture);
         }
-
+        requestContextController.deactivate();
     }
 }

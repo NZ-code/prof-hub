@@ -2,12 +2,15 @@ package pl.zenev.profhub.controllers;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.dto.GetProfessorResponse;
 import pl.zenev.profhub.dto.GetProfessorsResponse;
 import pl.zenev.profhub.models.Professor;
 import pl.zenev.profhub.services.ProfessorService;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
@@ -25,19 +28,26 @@ public class ProfessorsController {
         return new GetProfessorsResponse(professorList);
     }
 
-    public GetProfessorResponse getProfessorById(UUID uuid) {
+    public GetProfessorResponse getProfessorById(HttpServletResponse response, UUID uuid) throws IOException {
+
         GetProfessorResponse getProfessorResponse = null;
         Optional<Professor> professor = professorService.getById(uuid);
         if(professor.isPresent()){
             getProfessorResponse = new GetProfessorResponse(professor.get());
         }
+        else{
+            return null;
+        }
+
         return getProfessorResponse;
     }
 
     public byte[] getImage(UUID uuid) {
         return professorService.getProfessorImage(uuid);
     }
-
+    public void deleteImage(UUID uuid){
+        professorService.deletePortrait(uuid);
+    }
     public void putImage(UUID uuid, InputStream is) {
         professorService.updatePortrait(uuid, is);
     }

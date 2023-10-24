@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
 import pl.zenev.profhub.models.Professor;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,12 +39,13 @@ public class ProfessorRepository implements Repository<Professor>{
     public void update(Professor professor) {
         if(dataStorage.getProfessors().removeIf(professorStored -> professorStored.getId().equals(professor.getId()))){
             dataStorage.getProfessors().add(professor);
+
         }
         else{
             throw new IllegalArgumentException("The professor with id \"%s\" does not exist".formatted(professor.getId()));
         }
-
     }
+
 
     public byte[] getImage(UUID uuid) {
         Optional<Professor> professorOpt = getById(uuid);
