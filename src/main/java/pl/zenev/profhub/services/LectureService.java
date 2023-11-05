@@ -38,4 +38,8 @@ public class LectureService implements Service<Lecture>{
     public List<Lecture> getAllByCourseId(UUID uuid) {
         return lectureRepository.getLecturesByCourseId(uuid);
     }
+
+    public void delete(UUID id) {
+        lectureRepository.delete(id);
+    }
 }

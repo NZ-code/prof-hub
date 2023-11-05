@@ -33,7 +33,7 @@ public class CourseService implements Service<Course>{
 
     @Override
     public Optional<Course> getById(UUID uuid) {
-        return Optional.empty();
+        return courseRepository.getById(uuid);
     }
 
     @Override

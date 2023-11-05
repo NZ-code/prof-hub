@@ -13,49 +13,38 @@
     <ui:define name="content">
         <article>
             <header><h2><h:outputText value="#{courseView.course.name}"/></h2></header>
-<!--            <div class="container">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-4">-->
-<!--                        <div class="row mb-2">-->
-<!--                            <div class="col-6">-->
-<!--                                Brand-->
-<!--                            </div>-->
-<!--                            <div class="col-6">-->
-<!--                                <h:outputText value="#{courseView.course.d}"/>-->
 
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
             <h2>Lectures:</h2>
-            <h:dataTable value="#{courseView.lectures.lectures}" var="lecture"
+            <h:dataTable value="#{courseView.lecturesModel.lectures}" var="lecture"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
                 <h:column>
                     <f:facet name="header">UUID</f:facet>
                     <h:outputText value="#{lecture.id}"/>
                 </h:column>
-
+                <h:column>
+                    <f:facet name="header">lecture name</f:facet>
+                    <h:outputText value="#{lecture.name}"/>
+                </h:column>
                 <h:column>
                     <f:facet name="header">lengthInMinutes</f:facet>
                     <h:outputText value="#{lecture.lengthInMinutes}"/>
                 </h:column>
 
-<!--                <h:column>-->
-<!--                    <f:facet name="header">View</f:facet>-->
-<!--                    <h:link outcome="/item/item_view.xhtml" value="View">-->
-<!--                        <f:param name="id" value="#{item.id}"/>-->
-<!--                    </h:link>-->
-<!--                </h:column>-->
+                <h:column>
+                    <f:facet name="header">View</f:facet>
+                    <h:link outcome="/lecture/lecture_view.xhtml" value="View">
+                        <f:param name="id" value="#{lecture.id}"/>
+                    </h:link>
+                </h:column>
 
-<!--                <h:column>-->
-<!--                    <f:facet name="header">Delete</f:facet>-->
-<!--                    <h:form>-->
-<!--                        <h:commandButton styleClass="btn" value="Delete"-->
-<!--                                         action="#{productView.deleteItemAction(item)}"/>-->
-<!--                    </h:form>-->
-<!--                </h:column>-->
+                <h:column>
+                    <f:facet name="header">Delete</f:facet>
+                    <h:form>
+                        <h:commandButton styleClass="btn" value="Delete"
+                                         action="#{courseView.deleteLectureAction(lecture)}"/>
+                    </h:form>
+                </h:column>
             </h:dataTable>
         </article>
     </ui:define>

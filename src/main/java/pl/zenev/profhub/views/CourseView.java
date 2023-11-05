@@ -25,12 +25,14 @@ import java.util.function.Function;
 @ViewScoped
 @Named
 public class CourseView implements Serializable {
-    CourseService courseService;
-    LectureService lectureService;
-    CourseModel courseModel;
-    CourseToModel courseToModel;
-    LecturesModel lecturesModel;
-    LecturesToModel lecturesToModel;
+    private CourseService courseService;
+    private LectureService lectureService;
+    @Getter
+    private CourseModel course;
+    private CourseToModel courseToModel;
+    @Getter
+    private LecturesModel lecturesModel;
+    private LecturesToModel lecturesToModel;
 
     @Getter
     @Setter
@@ -45,15 +47,20 @@ public class CourseView implements Serializable {
     }
     public void init() throws IOException {
         UUID uuid = UUID.fromString(id);
-        Optional<Course> course = courseService.getById(uuid);
-        if(course.isPresent()){
-            this.courseModel = courseToModel.apply(course.get());
+        System.out.println(uuid.toString());
+        Optional<Course> courseEntity = courseService.getById(uuid);
+        System.out.println(courseEntity);
+        if(courseEntity.isPresent()){
+            this.course = courseToModel.apply(courseEntity.get());
             var doneLectures = lectureService.getAllByCourseId(uuid);
             this.lecturesModel = lecturesToModel.apply(doneLectures);
         } else {
-            FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Lecture not found");
+            FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Course not found");
         }
     }
-
+    public String deleteLectureAction(LecturesModel.Lecture lecture){
+        lectureService.delete(lecture.getId());
+        return "courses_list?faces-redirect=true";
+    }
 
 }

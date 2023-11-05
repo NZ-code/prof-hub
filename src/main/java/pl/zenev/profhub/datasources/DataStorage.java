@@ -50,4 +50,8 @@ public class DataStorage {
     public void deleteCourse(UUID id) {
         courses.removeIf(course -> course.getUuid().equals(id));
     }
+
+    public void deleteLecture(UUID id) {
+        lectures.removeIf(lecture -> lecture.getUuid().equals(id));
+    }
 }
