@@ -2,7 +2,9 @@ package pl.zenev.profhub.controllers.api;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import pl.zenev.profhub.dto.GetCourseResponse;
 import pl.zenev.profhub.dto.GetCoursesResponse;
+import pl.zenev.profhub.dto.PutCourseRequest;
 
 import java.util.UUID;
 
@@ -13,15 +15,16 @@ public interface CourseController {
     @Produces(MediaType.APPLICATION_JSON)
     GetCoursesResponse getCourses();
 
-//    @GET
-//    @Path("/products/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    GetProductResponse getProduct(@PathParam("id") UUID id);
-//
-//    @PUT
-//    @Path("/products/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    void putProduct(@PathParam("id") UUID id, PutProductRequest request);
+    @GET
+    @Path("/courses/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    GetCourseResponse getCourse(@PathParam("id") UUID id);
+
+    @PUT
+    @Path("/courses/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    void putCourse(@PathParam("id") UUID id, PutCourseRequest request);
+
 //
 //    @DELETE
 //    @Path("/products/{id}")
