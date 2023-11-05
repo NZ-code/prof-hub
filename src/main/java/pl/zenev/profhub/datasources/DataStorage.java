@@ -2,11 +2,9 @@ package pl.zenev.profhub.datasources;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import pl.zenev.profhub.models.Course;
-import pl.zenev.profhub.models.Domain;
-import pl.zenev.profhub.models.Lecture;
-import pl.zenev.profhub.models.Professor;
+import pl.zenev.profhub.entities.Course;
+import pl.zenev.profhub.entities.Lecture;
+import pl.zenev.profhub.entities.Professor;
 
 import java.util.*;
 
@@ -47,5 +45,9 @@ public class DataStorage {
 
     public Optional<Lecture> getLecture(UUID uuid) {
         return lectures.stream().filter(lecture -> lecture.getUuid().equals(uuid)).findFirst();
+    }
+
+    public void deleteCourse(UUID id) {
+        courses.removeIf(course -> course.getUuid().equals(id));
     }
 }

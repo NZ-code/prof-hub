@@ -4,10 +4,8 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
-import pl.zenev.profhub.models.Professor;
+import pl.zenev.profhub.entities.Professor;
 
-import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

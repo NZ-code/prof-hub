@@ -3,11 +3,10 @@ package pl.zenev.profhub.controllers;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.dto.GetProfessorResponse;
 import pl.zenev.profhub.dto.GetProfessorsResponse;
-import pl.zenev.profhub.models.Professor;
+import pl.zenev.profhub.entities.Professor;
 import pl.zenev.profhub.services.ProfessorService;
 
 import java.io.IOException;

@@ -5,7 +5,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
-import pl.zenev.profhub.models.Course;
+import pl.zenev.profhub.entities.Course;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,4 +36,7 @@ public class CourseRepository implements Repository<Course>{
     }
 
 
+    public void delete(UUID id) {
+        dataStorage.deleteCourse(id);
+    }
 }

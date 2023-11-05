@@ -3,8 +3,8 @@ package pl.zenev.profhub.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
-import pl.zenev.profhub.models.Course;
-import pl.zenev.profhub.models.Lecture;
+import pl.zenev.profhub.entities.Course;
+import pl.zenev.profhub.entities.Lecture;
 import pl.zenev.profhub.repositories.CourseRepository;
 import pl.zenev.profhub.repositories.LectureRepository;
 
@@ -39,5 +39,9 @@ public class CourseService implements Service<Course>{
     @Override
     public void add(Course course) {
         courseRepository.add(course);
+    }
+
+    public void delete(UUID id) {
+        courseRepository.delete(id);
     }
 }

@@ -4,8 +4,8 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
-import pl.zenev.profhub.models.Course;
-import pl.zenev.profhub.models.Lecture;
+import pl.zenev.profhub.entities.Course;
+import pl.zenev.profhub.entities.Lecture;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,5 +38,9 @@ public class LectureRepository implements Repository<Lecture>{
 
     public List<Lecture> getLecturesByCourse(Course course) {
         return getAll().stream().filter(lecture -> lecture.getCourse().equals(course)).toList();
+    }
+
+    public List<Lecture> getLecturesByCourseId(UUID uuid) {
+        return getAll().stream().filter(lecture -> lecture.getCourse().getUuid().equals(uuid)).toList();
     }
 }

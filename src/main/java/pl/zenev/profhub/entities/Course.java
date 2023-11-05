@@ -1,4 +1,4 @@
-package pl.zenev.profhub.models;
+package pl.zenev.profhub.entities;
 
 import lombok.*;
 
@@ -27,8 +27,7 @@ public class Course {
         this.domain = domain;
         this.uuid =  UUID.randomUUID();
     }
-
-    @Singular
-    private List<Lecture> lectures = new ArrayList<>();
+  @Singular
+  private List<Lecture> lectures = new ArrayList<>();
 
 }

@@ -3,9 +3,7 @@ package pl.zenev.profhub.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
-import pl.zenev.profhub.models.Course;
-import pl.zenev.profhub.models.Lecture;
-import pl.zenev.profhub.repositories.CourseRepository;
+import pl.zenev.profhub.entities.Lecture;
 import pl.zenev.profhub.repositories.LectureRepository;
 
 import java.util.List;
@@ -35,5 +33,9 @@ public class LectureService implements Service<Lecture>{
     @Override
     public void add(Lecture lecture) {
         lectureRepository.add(lecture);
+    }
+
+    public List<Lecture> getAllByCourseId(UUID uuid) {
+        return lectureRepository.getLecturesByCourseId(uuid);
     }
 }

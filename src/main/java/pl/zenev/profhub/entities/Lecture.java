@@ -1,4 +1,4 @@
-package pl.zenev.profhub.models;
+package pl.zenev.profhub.entities;
 
 import lombok.*;
 

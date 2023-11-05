@@ -4,10 +4,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
 import lombok.NoArgsConstructor;
-import pl.zenev.profhub.models.Professor;
+import pl.zenev.profhub.entities.Professor;
 import pl.zenev.profhub.repositories.ProfessorRepository;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;

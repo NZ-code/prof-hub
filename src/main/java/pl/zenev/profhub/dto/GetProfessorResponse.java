@@ -1,7 +1,7 @@
 package pl.zenev.profhub.dto;
 
 import lombok.*;
-import pl.zenev.profhub.models.Professor;
+import pl.zenev.profhub.entities.Professor;
 
 import java.util.UUID;
 
