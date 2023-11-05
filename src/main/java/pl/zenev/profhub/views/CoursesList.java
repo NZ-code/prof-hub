@@ -3,7 +3,7 @@ package pl.zenev.profhub.views;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import models.CoursesModel;
+import pl.zenev.profhub.models.CoursesModel;
 import pl.zenev.profhub.helpers.CoursesToModel;
 import pl.zenev.profhub.services.CourseService;
 

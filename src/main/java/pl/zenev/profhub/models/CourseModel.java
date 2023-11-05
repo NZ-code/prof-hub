@@ -1,8 +1,10 @@
-package models;
+package pl.zenev.profhub.models;
 
 import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
+
 @Getter
 @Setter
 @Builder
@@ -14,4 +16,6 @@ import java.util.Date;
 public class CourseModel {
     private String name;
     private Date startDate;
+    private UUID uuid;
+
 }

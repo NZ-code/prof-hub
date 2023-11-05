@@ -1,9 +1,7 @@
-package models;
+package pl.zenev.profhub.models;
 
 import lombok.*;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,8 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class LecturesModel  {
-
+public class CoursesModel {
     @Getter
     @Setter
     @Builder
@@ -23,12 +20,11 @@ public class LecturesModel  {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @ToString
     @EqualsAndHashCode
-    public static class Lecture{
+    public static class Course {
         private UUID id;
-        private float lengthInMinutes;
+
         private String name;
     }
-
-    @Singular
-    private List<Lecture> lectures;
+    //@Singular
+    private List<Course> courses;
 }

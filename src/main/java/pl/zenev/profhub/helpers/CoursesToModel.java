@@ -1,7 +1,7 @@
 package pl.zenev.profhub.helpers;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import models.CoursesModel;
+import pl.zenev.profhub.models.CoursesModel;
 import pl.zenev.profhub.entities.Course;
 
 import java.util.List;

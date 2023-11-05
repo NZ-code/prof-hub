@@ -1,6 +1,6 @@
 package pl.zenev.profhub.helpers;
 
-import models.LecturesModel;
+import pl.zenev.profhub.models.LecturesModel;
 import pl.zenev.profhub.entities.Lecture;
 
 import java.io.Serializable;

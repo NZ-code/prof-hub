@@ -8,8 +8,8 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
-import models.CourseModel;
-import models.LecturesModel;
+import pl.zenev.profhub.models.CourseModel;
+import pl.zenev.profhub.models.LecturesModel;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.helpers.CourseToModel;
 import pl.zenev.profhub.helpers.LecturesToModel;
@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
 
 @ViewScoped
 @Named

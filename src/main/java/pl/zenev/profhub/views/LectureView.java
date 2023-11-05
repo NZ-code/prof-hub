@@ -7,8 +7,7 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
-import models.LectureModel;
-import models.LecturesModel;
+import pl.zenev.profhub.models.LectureModel;
 import pl.zenev.profhub.entities.Lecture;
 import pl.zenev.profhub.helpers.LectureToModel;
 
