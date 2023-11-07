@@ -1,6 +1,7 @@
-package pl.zenev.profhub.dto;
+package pl.zenev.profhub.helpers;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import pl.zenev.profhub.dto.PutCourseRequest;
 import pl.zenev.profhub.entities.Course;
 
 import java.util.UUID;

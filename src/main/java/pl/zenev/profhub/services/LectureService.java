@@ -4,7 +4,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.entities.Lecture;
+import pl.zenev.profhub.repositories.CourseRepository;
 import pl.zenev.profhub.repositories.LectureRepository;
+import pl.zenev.profhub.repositories.ProfessorRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +17,11 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 public class LectureService implements Service<Lecture>{
     LectureRepository lectureRepository;
+    final CourseRepository courseRepository;
     @Inject
-    public LectureService(LectureRepository lectureRepository) {
+    public LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) {
         this.lectureRepository = lectureRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -35,11 +39,18 @@ public class LectureService implements Service<Lecture>{
         lectureRepository.add(lecture);
     }
 
-    public List<Lecture> getAllByCourseId(UUID uuid) {
-        return lectureRepository.getLecturesByCourseId(uuid);
+    public Optional<List<Lecture>> getAllByCourseId(UUID uuid) {
+        if(courseRepository.getById(uuid).isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
     }
 
     public void delete(UUID id) {
         lectureRepository.delete(id);
+    }
+
+    public void update(Lecture lecture) {
+        lectureRepository.update(lecture);
     }
 }

@@ -2,6 +2,10 @@ package pl.zenev.profhub.controllers.api;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import pl.zenev.profhub.dto.GetLectureResponse;
+import pl.zenev.profhub.dto.GetLecturesResponse;
+import pl.zenev.profhub.dto.PatchLectureRequest;
+import pl.zenev.profhub.dto.PutLectureRequest;
 
 import java.util.UUID;
 

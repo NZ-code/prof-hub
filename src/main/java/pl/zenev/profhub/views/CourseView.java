@@ -6,6 +6,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.NotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import pl.zenev.profhub.models.CourseModel;
@@ -52,7 +53,7 @@ public class CourseView implements Serializable {
         if(courseEntity.isPresent()){
             this.course = courseToModel.apply(courseEntity.get());
             var doneLectures = lectureService.getAllByCourseId(uuid);
-            this.lecturesModel = lecturesToModel.apply(doneLectures);
+            this.lecturesModel = lecturesToModel.apply(doneLectures.orElseThrow(NotFoundException::new));
         } else {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Course not found");
         }

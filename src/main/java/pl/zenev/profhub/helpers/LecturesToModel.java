@@ -1,5 +1,6 @@
 package pl.zenev.profhub.helpers;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import pl.zenev.profhub.models.LecturesModel;
 import pl.zenev.profhub.entities.Lecture;
 
@@ -7,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.function.Function;
 
+@ApplicationScoped
 public class LecturesToModel implements Function<List<Lecture>, LecturesModel>, Serializable {
 
     @Override

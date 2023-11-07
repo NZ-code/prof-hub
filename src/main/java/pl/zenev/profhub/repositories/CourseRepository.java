@@ -41,6 +41,6 @@ public class CourseRepository implements Repository<Course>{
     }
 
     public void update(Course course) {
-        dataStorage.update(course);
+        dataStorage.updateCourse(course);
     }
 }

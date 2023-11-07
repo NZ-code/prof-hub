@@ -60,11 +60,21 @@ public class DataStorage {
         lectures.removeIf(lecture -> lecture.getUuid().equals(id));
     }
 
-    public void update(Course course) {
+    public void updateCourse(Course course) {
         if (courses.removeIf(c -> c.getUuid().equals(course.getUuid()))) {
             courses.add(course);
         }else {
             throw new IllegalArgumentException("The course with id \"%s\" does not exist".formatted(course.getUuid()));
         }
     }
+
+    public void updateLecture(Lecture lecture) {
+
+        if (lectures.removeIf(l -> l.getUuid().equals(lecture.getUuid()))) {
+            lectures.add(lecture);
+        }else {
+            throw new IllegalArgumentException("The lecture with id \"%s\" does not exist".formatted(lecture.getUuid()));
+        }
+    }
+
 }

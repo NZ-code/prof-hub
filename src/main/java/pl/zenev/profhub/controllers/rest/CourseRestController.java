@@ -14,6 +14,7 @@ import pl.zenev.profhub.dto.*;
 import pl.zenev.profhub.helpers.CourseToResponse;
 import pl.zenev.profhub.helpers.CoursesToResponse;
 import pl.zenev.profhub.helpers.PatchRequestToCourse;
+import pl.zenev.profhub.helpers.RequestToCourse;
 import pl.zenev.profhub.services.CourseService;
 
 import java.util.UUID;
