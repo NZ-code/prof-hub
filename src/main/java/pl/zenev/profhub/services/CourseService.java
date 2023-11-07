@@ -43,5 +43,10 @@ public class CourseService implements Service<Course>{
 
     public void delete(UUID id) {
         courseRepository.delete(id);
+        lectureRepository.deleteByCourseId(id);
+    }
+
+    public void update(Course course) {
+        courseRepository.update(course);
     }
 }

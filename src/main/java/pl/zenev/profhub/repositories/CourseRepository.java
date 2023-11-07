@@ -39,4 +39,8 @@ public class CourseRepository implements Repository<Course>{
     public void delete(UUID id) {
         dataStorage.deleteCourse(id);
     }
+
+    public void update(Course course) {
+        dataStorage.update(course);
+    }
 }

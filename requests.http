@@ -56,3 +56,17 @@ Content-Type: application/json
 }
 
 ###
+
+DELETE http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/
+
+###
+
+PATCH http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/
+Content-Type: application/json
+
+{
+  "name": "anotherName",
+  "startDate": "2026-12-25T00:00:00Z"
+}
+
+###

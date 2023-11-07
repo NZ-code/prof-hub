@@ -47,4 +47,8 @@ public class LectureRepository implements Repository<Lecture>{
     public void delete(UUID id) {
         dataStorage.deleteLecture(id);
     }
+
+    public void deleteByCourseId(UUID id) {
+        dataStorage.deleteLecturesByCourse(id);
+    }
 }

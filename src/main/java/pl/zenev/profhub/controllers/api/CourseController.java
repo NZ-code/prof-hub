@@ -4,6 +4,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import pl.zenev.profhub.dto.GetCourseResponse;
 import pl.zenev.profhub.dto.GetCoursesResponse;
+import pl.zenev.profhub.dto.PatchCourseRequest;
 import pl.zenev.profhub.dto.PutCourseRequest;
 
 import java.util.UUID;
@@ -25,13 +26,12 @@ public interface CourseController {
     @Produces(MediaType.APPLICATION_JSON)
     void putCourse(@PathParam("id") UUID id, PutCourseRequest request);
 
-//
-//    @DELETE
-//    @Path("/products/{id}")
-//    void deleteProduct(@PathParam("id") UUID id);
-//
-//    @PATCH
-//    @Path("/products/{id}")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    void patchProduct(@PathParam("id") UUID id, PatchProductRequest request);
+    @DELETE
+    @Path("/courses/{id}")
+    void deleteCourse(@PathParam("id") UUID id);
+
+    @PATCH
+    @Path("/courses/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void patchCourse(@PathParam("id") UUID id, PatchCourseRequest request);
 }

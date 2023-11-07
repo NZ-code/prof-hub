@@ -10,12 +10,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import pl.zenev.profhub.controllers.api.CourseController;
-import pl.zenev.profhub.dto.GetCourseResponse;
-import pl.zenev.profhub.dto.GetCoursesResponse;
-import pl.zenev.profhub.dto.PutCourseRequest;
-import pl.zenev.profhub.dto.RequestToCourse;
+import pl.zenev.profhub.dto.*;
 import pl.zenev.profhub.helpers.CourseToResponse;
 import pl.zenev.profhub.helpers.CoursesToResponse;
+import pl.zenev.profhub.helpers.PatchRequestToCourse;
 import pl.zenev.profhub.services.CourseService;
 
 import java.util.UUID;
@@ -28,18 +26,20 @@ public class CourseRestController implements CourseController {
     private final CoursesToResponse coursesToResponse;
     private final CourseToResponse courseToResponse;
     private final RequestToCourse requestToCourse;
+    private final PatchRequestToCourse patchRequestToCourse;
     @Context
     public void setResponse(HttpServletResponse response) {
         this.response = response;
     }
 
     @Inject
-    public CourseRestController(CourseService courseService, UriInfo uriInfo, CoursesToResponse coursesToResponse, CourseToResponse courseToResponse, RequestToCourse requestToCourse) {
+    public CourseRestController(CourseService courseService, UriInfo uriInfo, CoursesToResponse coursesToResponse, CourseToResponse courseToResponse, RequestToCourse requestToCourse, PatchRequestToCourse patchRequestToCourse) {
         this.courseService = courseService;
         this.uriInfo = uriInfo;
         this.coursesToResponse = coursesToResponse;
         this.courseToResponse = courseToResponse;
         this.requestToCourse = requestToCourse;
+        this.patchRequestToCourse = patchRequestToCourse;
     }
 
     @Override
@@ -68,5 +68,20 @@ public class CourseRestController implements CourseController {
         catch (IllegalArgumentException ex) {
             throw new BadRequestException(ex);
         }
+    }
+
+    @Override
+    public void deleteCourse(UUID id) {
+        courseService.delete(id);
+    }
+
+    @Override
+    public void patchCourse(UUID id, PatchCourseRequest request) {
+        courseService.getById(id).ifPresentOrElse(
+                entity ->  courseService.update(patchRequestToCourse.apply(entity, request)),
+                () -> {
+                    throw new NotFoundException();
+                }
+        );
     }
 }

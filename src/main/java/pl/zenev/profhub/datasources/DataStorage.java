@@ -48,10 +48,23 @@ public class DataStorage {
     }
 
     public void deleteCourse(UUID id) {
+
         courses.removeIf(course -> course.getUuid().equals(id));
     }
 
     public void deleteLecture(UUID id) {
         lectures.removeIf(lecture -> lecture.getUuid().equals(id));
+    }
+
+    public void deleteLecturesByCourse(UUID id) {
+        lectures.removeIf(lecture -> lecture.getUuid().equals(id));
+    }
+
+    public void update(Course course) {
+        if (courses.removeIf(c -> c.getUuid().equals(course.getUuid()))) {
+            courses.add(course);
+        }else {
+            throw new IllegalArgumentException("The course with id \"%s\" does not exist".formatted(course.getUuid()));
+        }
     }
 }
