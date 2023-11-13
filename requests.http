@@ -43,7 +43,7 @@ DELETE http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/c78d464e-9df9-
 GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses
 
 ###
-GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/19393a47-091c-4672-af01-6df9c3df8ce8/
+GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/3ce1d5ba-8105-4eb0-b7af-d1f87bc92c98
 
 
 ###
@@ -72,7 +72,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/lectures
+GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/lectures/
 
 ###
 

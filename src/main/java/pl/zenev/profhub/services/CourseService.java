@@ -19,8 +19,9 @@ public class CourseService implements Service<Course>{
     CourseRepository courseRepository;
     LectureRepository lectureRepository;
     @Inject
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, LectureRepository lectureRepository) {
         this.courseRepository = courseRepository;
+        this.lectureRepository = lectureRepository;
     }
 
     public List<Lecture> getCourseLectures(Course course){

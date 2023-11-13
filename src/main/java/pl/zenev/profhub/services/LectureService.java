@@ -16,7 +16,7 @@ import java.util.UUID;
 @ApplicationScoped
 @NoArgsConstructor(force = true)
 public class LectureService implements Service<Lecture>{
-    LectureRepository lectureRepository;
+    final LectureRepository lectureRepository;
     final CourseRepository courseRepository;
     @Inject
     public LectureService(LectureRepository lectureRepository, CourseRepository courseRepository) {
