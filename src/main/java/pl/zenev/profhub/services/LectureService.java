@@ -3,6 +3,7 @@ package pl.zenev.profhub.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
+import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Lecture;
 import pl.zenev.profhub.repositories.CourseRepository;
 import pl.zenev.profhub.repositories.LectureRepository;
@@ -40,9 +41,12 @@ public class LectureService implements Service<Lecture>{
     }
 
     public Optional<List<Lecture>> getAllByCourseId(UUID uuid) {
-        if(courseRepository.getById(uuid).isEmpty()){
+        System.out.println("course :" + courseRepository.getById(uuid));
+        Optional<Course> course = courseRepository.getById(uuid);
+        if(course.isEmpty()){
             return Optional.empty();
         }
+        System.out.println("lectureRepository.getLecturesByCourseId(uuid)="+ lectureRepository.getLecturesByCourseId(uuid));
         return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
     }
 

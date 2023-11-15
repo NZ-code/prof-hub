@@ -23,9 +23,9 @@ import java.util.UUID;
 
 @Path("")
 public class LectureRestController implements LectureController {
-    LectureService lectureService;
-    LecturesToResponse lecturesToResponse;
-    LectureToResponse lectureToResponse;
+    final LectureService lectureService;
+    final LecturesToResponse lecturesToResponse;
+    final LectureToResponse lectureToResponse;
     final CourseService courseService;
     final PatchRequestToLecture patchRequestToLecture;
     private  HttpServletResponse response;
@@ -36,8 +36,10 @@ public class LectureRestController implements LectureController {
         this.response = response;
     }
     @Inject
-    public LectureRestController(LectureService lectureService, CourseService courseService, PatchRequestToLecture patchRequestToLecture,  UriInfo uriInfo, RequestToLecture requestToLecture) {
+    public LectureRestController(LectureService lectureService, LecturesToResponse lecturesToResponse, LectureToResponse lectureToResponse, CourseService courseService, PatchRequestToLecture patchRequestToLecture, UriInfo uriInfo, RequestToLecture requestToLecture) {
         this.lectureService = lectureService;
+        this.lecturesToResponse = lecturesToResponse;
+        this.lectureToResponse = lectureToResponse;
         this.courseService = courseService;
         this.patchRequestToLecture = patchRequestToLecture;
         this.uriInfo = uriInfo;
@@ -45,14 +47,15 @@ public class LectureRestController implements LectureController {
     }
 
     @Override
-    public GetLecturesResponse getProductLectures(UUID id) {
+    public GetLecturesResponse getCourseLectures(UUID id) {
+        System.out.println("controller");
         return lectureService.getAllByCourseId(id)
                 .map(lecturesToResponse)
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public GetLectureResponse getProductLecture(UUID courseId, UUID lectureId) {
+    public GetLectureResponse getCourseLecture(UUID courseId, UUID lectureId) {
         return lectureService.getAllByCourseId(courseId)
                 .map(lectures -> lectures.stream().filter(lecture -> lecture.getUuid().equals(lectureId)).findFirst()
                         .map(lectureToResponse)

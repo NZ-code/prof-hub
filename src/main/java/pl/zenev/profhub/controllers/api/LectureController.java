@@ -15,12 +15,12 @@ public interface LectureController {
     @GET
     @Path("/courses/{id}/lectures")
     @Produces(MediaType.APPLICATION_JSON)
-    GetLecturesResponse getProductLectures(@PathParam("id") UUID id);
+    GetLecturesResponse getCourseLectures(@PathParam("id") UUID id);
 
     @GET
     @Path("/courses/{id_course}/lectures/{id_lecture}")
     @Produces(MediaType.APPLICATION_JSON)
-    GetLectureResponse getProductLecture(@PathParam("id_course") UUID courseId, @PathParam("id_lecture") UUID lectureId);
+    GetLectureResponse getCourseLecture(@PathParam("id_course") UUID courseId, @PathParam("id_lecture") UUID lectureId);
 
     @PUT
     @Path("/courses/{id_course}/lectures/{id_lecture}")

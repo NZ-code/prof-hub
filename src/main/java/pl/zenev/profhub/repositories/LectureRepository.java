@@ -41,6 +41,7 @@ public class LectureRepository implements Repository<Lecture>{
     }
 
     public List<Lecture> getLecturesByCourseId(UUID uuid) {
+
         return getAll().stream().filter(lecture -> lecture.getCourse().getUuid().equals(uuid)).toList();
     }
 

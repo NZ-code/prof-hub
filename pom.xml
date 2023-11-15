@@ -80,11 +80,9 @@
             <build>
                 <plugins>
                     <plugin>
-                        <!--                        <groupId>io.openliberty.tools</groupId>-->
-                        <!--                        <artifactId>liberty-maven-plugin</artifactId>-->
-                        <!--                        <version>3.7.1</version>-->
                         <groupId>io.openliberty.tools</groupId>
                         <artifactId>liberty-maven-plugin</artifactId>
+                        <version>3.7.1</version>
 
                     </plugin>
                 </plugins>

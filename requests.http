@@ -43,10 +43,7 @@ DELETE http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/c78d464e-9df9-
 GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses
 
 ###
-GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/3ce1d5ba-8105-4eb0-b7af-d1f87bc92c98
 
-
-###
 PUT http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/
 Content-Type: application/json
 
@@ -55,9 +52,6 @@ Content-Type: application/json
   "startDate": "2023-11-05T00:00:00Z"
 }
 
-###
-
-DELETE http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/
 
 ###
 
@@ -72,11 +66,21 @@ Content-Type: application/json
 
 ###
 
+DELETE http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/
+
+
+###
+
+GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/
+
+
+###
+
 GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/lectures/
 
 ###
 
-PUT http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/lectures/ff327e8a-77c0-4f9b-90a2-89e16895d1e1
+PUT http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/lectures/ff327e8a-77c0-4f9b-90a2-89e16895d1e1/
 Content-Type: application/json
 
 {
@@ -85,7 +89,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/lectures/ff327e8a-77c0-4f9b-90a2-89e16895d1e1
+GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea-8cc7-9d9c2fc86baf/lectures/ff327e8a-77c0-4f9b-90a2-89e16895d1e1/
 
 
 ###
@@ -94,7 +98,7 @@ PATCH http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/courses/f4b2be36-2512-44ea
 Content-Type: application/json
 
 {
-  "date": "Lecture 2"
+  "name": "Lecture 2"
 }
 
 ###
