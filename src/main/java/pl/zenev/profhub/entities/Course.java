@@ -1,5 +1,8 @@
 package pl.zenev.profhub.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -14,13 +17,14 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-
+@Entity
 public class Course {
-
+    @Id
+    private UUID uuid;
     private String name;
     private Date startDate;
     private Domain domain;
-    private UUID uuid;
+
     public Course(String name, Date startDate, Domain domain){
         this.name = name;
         this.startDate = startDate;
@@ -28,6 +32,7 @@ public class Course {
         this.uuid =  UUID.randomUUID();
     }
   @Singular
+  @OneToMany(mappedBy = "course")
   private List<Lecture> lectures = new ArrayList<>();
 
 }

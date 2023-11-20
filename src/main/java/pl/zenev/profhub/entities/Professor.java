@@ -1,5 +1,8 @@
 package pl.zenev.profhub.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -12,7 +15,9 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Getter
 @Setter
+@Entity
 public class Professor {
+    @Id
     private UUID id;
 
 
@@ -20,6 +25,7 @@ public class Professor {
 
     private int age;
 
+    @OneToMany(mappedBy = "professor")
     private List<Lecture> finishedLectures;
     public Professor(String name, int age) {
         UUID id = UUID.randomUUID();
