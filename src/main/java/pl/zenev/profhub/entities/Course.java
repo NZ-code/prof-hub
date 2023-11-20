@@ -1,5 +1,6 @@
 package pl.zenev.profhub.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -31,8 +32,10 @@ public class Course {
         this.domain = domain;
         this.uuid =  UUID.randomUUID();
     }
+  @ToString.Exclude//It's common to exclude lists from toString
+  @EqualsAndHashCode.Exclude
   @Singular
-  @OneToMany(mappedBy = "course")
+  @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Lecture> lectures = new ArrayList<>();
 
 }

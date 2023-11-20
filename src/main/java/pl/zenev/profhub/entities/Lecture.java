@@ -2,6 +2,7 @@ package pl.zenev.profhub.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,8 +24,10 @@ public class Lecture {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "course")
     private Course course;
     @ManyToOne
+    @JoinColumn(name = "professor")
     private Professor professor;
 
     public Lecture( String name, Course course, float lengthInMinutes, Professor professor) {
