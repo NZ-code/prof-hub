@@ -40,10 +40,10 @@ public class InitializedData {
     @SneakyThrows
     private void init() {
         requestContextController.activate();// start request scope in order to inject request scoped repositories
-        Professor professorNick = new Professor("Nick", 53, UUID.fromString("525d3e7b-bb1f-4c13-bf17-926d1a12e4c0"));
-        Professor professorAlex = new Professor("Alex", 45, UUID.fromString("c78d464e-9df9-4b63-9268-60426b6fdcfa"));
-        Professor professorMary = new Professor("Mary", 76, UUID.fromString("4ec96d7a-5712-498f-96c3-8567a2981f22"));
-        Professor professorJohn = new Professor("John", 88, UUID.fromString("11a1de81-1b71-4c1c-aaac-7be89b6615b7"));
+        Professor professorNick = new Professor("Nick", 53);
+        Professor professorAlex = new Professor("Alex", 45);
+        Professor professorMary = new Professor("Mary", 76);
+        Professor professorJohn = new Professor("John", 88);
 
         professorService.add(professorNick);
         professorService.add(professorAlex);

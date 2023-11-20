@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import pl.zenev.profhub.controllers.api.CourseController;
 import pl.zenev.profhub.dto.*;
+import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.helpers.CourseToResponse;
 import pl.zenev.profhub.helpers.CoursesToResponse;
 import pl.zenev.profhub.helpers.PatchRequestToCourse;
@@ -73,7 +74,8 @@ public class CourseRestController implements CourseController {
 
     @Override
     public void deleteCourse(UUID id) {
-        courseService.delete(id);
+        Course course = courseService.getById(id).orElseThrow(NotFoundException::new);
+        courseService.delete(course);
     }
 
     @Override

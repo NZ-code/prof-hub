@@ -2,6 +2,7 @@ package pl.zenev.profhub.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Lecture;
@@ -26,6 +27,7 @@ public class LectureService implements Service<Lecture>{
     }
 
     @Override
+
     public List<Lecture> getAll() {
         return lectureRepository.getAll();
     }
@@ -36,6 +38,7 @@ public class LectureService implements Service<Lecture>{
     }
 
     @Override
+    @Transactional
     public void add(Lecture lecture) {
         lectureRepository.add(lecture);
     }
@@ -49,11 +52,11 @@ public class LectureService implements Service<Lecture>{
         System.out.println("lectureRepository.getLecturesByCourseId(uuid)="+ lectureRepository.getLecturesByCourseId(uuid));
         return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
     }
-
+    @Transactional
     public void delete(UUID id) {
         lectureRepository.delete(id);
     }
-
+    @Transactional
     public void update(Lecture lecture) {
         lectureRepository.update(lecture);
     }

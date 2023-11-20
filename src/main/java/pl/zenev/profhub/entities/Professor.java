@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
@@ -25,22 +25,20 @@ public class Professor {
 
     private int age;
 
-    @OneToMany(mappedBy = "professor")
-    private List<Lecture> finishedLectures;
     public Professor(String name, int age) {
-        UUID id = UUID.randomUUID();
+        this.id = UUID.randomUUID();
         this.name = name;
         this.age = age;
-    }
-
-    public Professor(String name, int age, UUID uuid) {
-        this(name, age);
         this.finishedLectures = new ArrayList<>();
-
-        this.id = uuid;
-
-
     }
+
+    @OneToMany(mappedBy = "professor")
+    private List<Lecture> finishedLectures;
+
+
+
+
+
 
 
 

@@ -3,6 +3,7 @@ package pl.zenev.profhub.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.entities.Professor;
 import pl.zenev.profhub.repositories.ProfessorRepository;
@@ -37,9 +38,11 @@ public class ProfessorService implements Service<Professor> {
     }
 
 
+    @Transactional
     public void add(Professor professor) {
         professorRepository.add(professor);
     }
+
     public void deletePortrait(UUID id){
         String filePath = context.getInitParameter("filePath");
         filePath +=  id.toString() + ".jpg";
