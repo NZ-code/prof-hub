@@ -31,7 +31,8 @@ public class Professor {
         this.age = age;
         this.finishedLectures = new ArrayList<>();
     }
-
+    @ToString.Exclude//It's common to exclude lists from toString
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "professor")
     private List<Lecture> finishedLectures;
 

@@ -16,10 +16,10 @@ import java.util.Optional;
 import java.util.UUID;
 @RequestScoped
 @NoArgsConstructor(force = true)
-public class ProfessorsController {
+public class ProfessorsControllerOld {
     private ProfessorService professorService;
     @Inject
-    public ProfessorsController(ProfessorService professorService){
+    public ProfessorsControllerOld(ProfessorService professorService){
         this.professorService = professorService;
     }
     public GetProfessorsResponse getAllProfessors(){
