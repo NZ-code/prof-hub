@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
+import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Professor;
 
 import java.util.List;
@@ -67,5 +68,9 @@ public class ProfessorRepository implements Repository<Professor>{
             throw new IllegalArgumentException("The professor with id \"%s\" does not exist".formatted(uuid));
         }
 
+    }
+
+    public void delete(Professor professor) {
+        em.remove(em.find(Professor.class, professor.getId()));
     }
 }

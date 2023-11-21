@@ -78,4 +78,14 @@ public class ProfessorService implements Service<Professor> {
         filePath += id.toString() + ".jpg";
         return fileService.readBytesFromFile(filePath);
     }
+
+    @Transactional
+    public void delete(Professor professor) {
+        professorRepository.delete(professor);
+    }
+
+    @Transactional
+    public void update(Professor professor) {
+        professorRepository.update(professor);
+    }
 }

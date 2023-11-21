@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString
+@EqualsAndHashCode
 @Entity
 public class Professor {
     @Id

@@ -7,7 +7,7 @@ GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors
 ###
 # Get single professor.
 
-GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/c78d464e-9df9-4b63-9268-60426b6fdcfa
+GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/1dfefc41-4ce9-40c1-9fd8-1ee00171881a
 
 
 ###

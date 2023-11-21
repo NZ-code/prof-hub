@@ -4,18 +4,30 @@ import lombok.*;
 import pl.zenev.profhub.entities.Professor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
 public class GetProfessorsResponse
 {
-    public GetProfessorsResponse(List<Professor> professors) {
-        this.professors = professors;
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @ToString
+    @EqualsAndHashCode
+    public static class Professor{
+        private UUID id;
+
+        private String name;
     }
 
-    private List<Professor> professors;
+    @Singular
+    private List<GetProfessorsResponse.Professor> professors;
 }
