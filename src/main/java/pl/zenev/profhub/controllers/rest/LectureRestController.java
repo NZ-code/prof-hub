@@ -19,6 +19,7 @@ import pl.zenev.profhub.helpers.RequestToLecture;
 import pl.zenev.profhub.services.CourseService;
 import pl.zenev.profhub.services.LectureService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Path("")
@@ -72,6 +73,10 @@ public class LectureRestController implements LectureController {
                         Lecture lecture = requestToLecture.apply(lectureId, request);
                         lecture.setCourse(course);
                         lectureService.add(lecture);
+                        List<Lecture> lectureList = course.getLectures();
+                        lectureList.add(lecture);
+                        course.setLectures(lectureList);
+                        courseService.update(course);
                     },
                     () -> {
                         throw new NotFoundException();
