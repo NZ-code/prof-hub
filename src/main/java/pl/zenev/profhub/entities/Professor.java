@@ -1,8 +1,6 @@
 package pl.zenev.profhub.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -23,6 +21,7 @@ public class Professor {
 
 
     private String name;
+    private String login;
 
     private int age;
 
@@ -38,14 +37,19 @@ public class Professor {
     private List<Lecture> finishedLectures;
 
 
-
-
-
-
-
+    /**
+     * User's password.
+     */
+    @ToString.Exclude
+    private String password;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private byte[] picture;
+
+    @CollectionTable(name = "users__roles", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
 }

@@ -1,5 +1,6 @@
 package pl.zenev.profhub.controllers.rest;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import pl.zenev.profhub.dto.*;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Professor;
 import pl.zenev.profhub.helpers.*;
+import pl.zenev.profhub.security.UserRoles;
 import pl.zenev.profhub.services.CourseService;
 import pl.zenev.profhub.services.ProfessorService;
 
@@ -24,6 +26,7 @@ import java.util.UUID;
 
 @Path("")
 @Log
+@RolesAllowed(UserRoles.USER)
 public class ProfessorRestController implements ProfessorsController {
     private HttpServletResponse response;
     private ProfessorService professorService;

@@ -1,17 +1,22 @@
 package pl.zenev.profhub.services;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import jakarta.servlet.ServletContext;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.entities.Professor;
 import pl.zenev.profhub.repositories.ProfessorRepository;
+import pl.zenev.profhub.security.UserRoles;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,28 +28,36 @@ public class ProfessorService implements Service<Professor> {
     private ProfessorRepository professorRepository;
     private ServletContext context;
     private FileService fileService;
+    private final Pbkdf2PasswordHash passwordHash;
+
 
 
     @Inject
-    public ProfessorService(FileService fileService, ProfessorRepository professorRepository,ServletContext context) {
+    public ProfessorService(FileService fileService, ProfessorRepository professorRepository,
+    @SuppressWarnings("CdiInjectionPointsInspection") Pbkdf2PasswordHash passwordHash) {
         this.professorRepository = professorRepository;
         this.fileService = fileService;
-        this.context = context;
+        //this.context = context;
+        this.passwordHash = passwordHash;
     }
 
+    @RolesAllowed(UserRoles.ADMIN)
     public List<Professor> getAll(){
         return professorRepository.getAll();
     }
 
+    @RolesAllowed(UserRoles.ADMIN)
     public Optional<Professor> getById(UUID uuid) {
         return professorRepository.getById(uuid);
     }
 
 
     //@Transactional
+    @PermitAll
     public void add(Professor professor) {
         professorRepository.add(professor);
     }
+
 
     public void deletePortrait(UUID id){
         String filePath = context.getInitParameter("filePath");
@@ -83,6 +96,7 @@ public class ProfessorService implements Service<Professor> {
     }
 
     //@Transactional
+    @RolesAllowed(UserRoles.ADMIN)
     public void delete(Professor professor) {
         professorRepository.delete(professor);
     }
@@ -90,5 +104,16 @@ public class ProfessorService implements Service<Professor> {
     //@Transactional
     public void update(Professor professor) {
         professorRepository.update(professor);
+    }
+
+    @RolesAllowed(UserRoles.ADMIN)
+    public Optional<Professor> find(String login) {
+        return professorRepository.findByLogin(login);
+    }
+    @PermitAll
+    public boolean verify(String login, String password) {
+        return find(login)
+                .map(user -> passwordHash.verify(password.toCharArray(), user.getPassword()))
+                .orElse(false);
     }
 }

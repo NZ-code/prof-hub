@@ -4,12 +4,14 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Professor;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -74,5 +76,15 @@ public class ProfessorRepository implements Repository<Professor>{
 
     public void delete(Professor professor) {
         em.remove(em.find(Professor.class, professor.getId()));
+    }
+
+    public Optional<Professor> findByLogin(String login) {
+        try {
+            return Optional.of(em.createQuery("select p from Professor p  where p.login = :login", Professor.class)
+                    .setParameter("login", login)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 }

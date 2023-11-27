@@ -1,5 +1,6 @@
 package pl.zenev.profhub.controllers.rest;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
@@ -17,12 +18,14 @@ import pl.zenev.profhub.helpers.CourseToResponse;
 import pl.zenev.profhub.helpers.CoursesToResponse;
 import pl.zenev.profhub.helpers.PatchRequestToCourse;
 import pl.zenev.profhub.helpers.RequestToCourse;
+import pl.zenev.profhub.security.UserRoles;
 import pl.zenev.profhub.services.CourseService;
 
 import java.util.UUID;
 
 @Path("")
 @Log
+@RolesAllowed(UserRoles.ADMIN)//Secure implementation, not the interface
 public class CourseRestController implements CourseController {
     private HttpServletResponse response;
     private final CourseService courseService;
