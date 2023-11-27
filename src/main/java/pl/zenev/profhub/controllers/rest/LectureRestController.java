@@ -1,5 +1,6 @@
 package pl.zenev.profhub.controllers.rest;
 
+import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
@@ -9,6 +10,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.extern.java.Log;
 import pl.zenev.profhub.controllers.api.LectureController;
 import pl.zenev.profhub.dto.*;
 import pl.zenev.profhub.entities.Lecture;
@@ -23,11 +25,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Path("")
+@Log
 public class LectureRestController implements LectureController {
-    final LectureService lectureService;
+    LectureService lectureService;
     final LecturesToResponse lecturesToResponse;
     final LectureToResponse lectureToResponse;
-    final CourseService courseService;
+    CourseService courseService;
     final PatchRequestToLecture patchRequestToLecture;
     private  HttpServletResponse response;
     private final UriInfo uriInfo;
@@ -37,14 +40,20 @@ public class LectureRestController implements LectureController {
         this.response = response;
     }
     @Inject
-    public LectureRestController(LectureService lectureService, LecturesToResponse lecturesToResponse, LectureToResponse lectureToResponse, CourseService courseService, PatchRequestToLecture patchRequestToLecture, UriInfo uriInfo, RequestToLecture requestToLecture) {
-        this.lectureService = lectureService;
+    public LectureRestController( LecturesToResponse lecturesToResponse, LectureToResponse lectureToResponse, PatchRequestToLecture patchRequestToLecture, UriInfo uriInfo, RequestToLecture requestToLecture) {
         this.lecturesToResponse = lecturesToResponse;
         this.lectureToResponse = lectureToResponse;
-        this.courseService = courseService;
         this.patchRequestToLecture = patchRequestToLecture;
         this.uriInfo = uriInfo;
         this.requestToLecture = requestToLecture;
+    }
+    @EJB
+    public void setLectureService(LectureService service) {
+        this.lectureService = service;
+    }
+    @EJB
+    public void setCourseService(CourseService service) {
+        this.courseService = service;
     }
 
     @Override

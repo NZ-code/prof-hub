@@ -1,15 +1,24 @@
 
 # Get all professors.
 
+
 GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors
 
 
 ###
 # Get single professor.
 
-GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/1dfefc41-4ce9-40c1-9fd8-1ee00171881a
+GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/c6c86172-8f2a-4c3a-9e61-91078e263086
 
+###
+# PUT single professor.
 
+PUT http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/b6c86172-8f2a-4c3a-9e61-91078e263086/
+Content-Type: application/json
+
+{
+  "name": "NewCreated"
+}
 ###
 # GET NON EXISTENT
 
@@ -19,7 +28,7 @@ GET http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/gh8d464e-9df9-4b6
 
 # Create character portrait.
 
-PUT http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/c78d464e-9df9-4b63-9268-60426b6fdcfa/image
+PUT http://localhost:9080/prof-hub-1.0-SNAPSHOT/api/professors/c6c86172-8f2a-4c3a-9e61-91078e263086/image
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary

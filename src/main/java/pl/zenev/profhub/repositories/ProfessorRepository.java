@@ -1,5 +1,6 @@
 package pl.zenev.profhub.repositories;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -13,7 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequestScoped
+@Dependent
+//@RequestScoped
 //@NoArgsConstructor(force = true)
 public class ProfessorRepository implements Repository<Professor>{
 

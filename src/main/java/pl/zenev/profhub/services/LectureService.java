@@ -1,5 +1,7 @@
 package pl.zenev.profhub.services;
 
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -15,7 +17,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class LectureService implements Service<Lecture>{
     final LectureRepository lectureRepository;
@@ -38,7 +41,7 @@ public class LectureService implements Service<Lecture>{
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public void add(Lecture lecture) {
         lectureRepository.add(lecture);
     }
@@ -52,11 +55,11 @@ public class LectureService implements Service<Lecture>{
         System.out.println("lectureRepository.getLecturesByCourseId(uuid)="+ lectureRepository.getLecturesByCourseId(uuid));
         return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
     }
-    @Transactional
+    //@Transactional
     public void delete(UUID id) {
         lectureRepository.delete(id);
     }
-    @Transactional
+    //@Transactional
     public void update(Lecture lecture) {
         lectureRepository.update(lecture);
     }

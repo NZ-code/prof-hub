@@ -1,5 +1,7 @@
 package pl.zenev.profhub.services;
 
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
@@ -14,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class ProfessorService implements Service<Professor> {
     private ProfessorRepository professorRepository;
@@ -38,7 +41,7 @@ public class ProfessorService implements Service<Professor> {
     }
 
 
-    @Transactional
+    //@Transactional
     public void add(Professor professor) {
         professorRepository.add(professor);
     }
@@ -79,12 +82,12 @@ public class ProfessorService implements Service<Professor> {
         return fileService.readBytesFromFile(filePath);
     }
 
-    @Transactional
+    //@Transactional
     public void delete(Professor professor) {
         professorRepository.delete(professor);
     }
 
-    @Transactional
+    //@Transactional
     public void update(Professor professor) {
         professorRepository.update(professor);
     }

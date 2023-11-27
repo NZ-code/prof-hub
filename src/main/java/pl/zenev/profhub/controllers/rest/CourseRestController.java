@@ -9,6 +9,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.extern.java.Log;
 import pl.zenev.profhub.controllers.api.CourseController;
 import pl.zenev.profhub.dto.*;
 import pl.zenev.profhub.entities.Course;
@@ -21,6 +22,7 @@ import pl.zenev.profhub.services.CourseService;
 import java.util.UUID;
 
 @Path("")
+@Log
 public class CourseRestController implements CourseController {
     private HttpServletResponse response;
     private final CourseService courseService;

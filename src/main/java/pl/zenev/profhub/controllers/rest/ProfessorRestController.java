@@ -1,5 +1,6 @@
 package pl.zenev.profhub.controllers.rest;
 
+import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
@@ -9,6 +10,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.extern.java.Log;
 import pl.zenev.profhub.controllers.api.CourseController;
 import pl.zenev.profhub.controllers.api.ProfessorsController;
 import pl.zenev.profhub.dto.*;
@@ -21,9 +23,10 @@ import pl.zenev.profhub.services.ProfessorService;
 import java.util.UUID;
 
 @Path("")
+@Log
 public class ProfessorRestController implements ProfessorsController {
     private HttpServletResponse response;
-    private final ProfessorService professorService;
+    private ProfessorService professorService;
     private final UriInfo uriInfo;
     private final ProfessorsToResponse professorsToResponse;
     private final ProfessorToResponse professorToResponse;
@@ -35,19 +38,21 @@ public class ProfessorRestController implements ProfessorsController {
     }
 
     @Inject
-    public ProfessorRestController(ProfessorService professorService, UriInfo uriInfo,
+    public ProfessorRestController(UriInfo uriInfo,
                                    ProfessorsToResponse professorsToResponse,
                                    ProfessorToResponse professorToResponse,
                                    RequestToProfessor requestToProfessor,
                                    PatchRequestToProfessor patchRequestToProfessor) {
-        this.professorService = professorService;
         this.uriInfo = uriInfo;
         this.professorsToResponse = professorsToResponse;
         this.professorToResponse = professorToResponse;
         this.requestToProfessor = requestToProfessor;
         this.patchRequestToProfessor = patchRequestToProfessor;
     }
-
+    @EJB
+    public void setService(ProfessorService professorService){
+        this.professorService = professorService;
+    }
     @Override
     public GetProfessorsResponse getProfessors() {
         return professorsToResponse.apply(professorService.getAll());
@@ -66,12 +71,13 @@ public class ProfessorRestController implements ProfessorsController {
             System.out.println("UUID:" + id);
             professorService.add(requestToProfessor.apply(id, request));
             response.setHeader("Location", uriInfo.getBaseUriBuilder()
-                    .path(CourseController.class, "getProfessor")
+                    .path(ProfessorsController.class, "getProfessor")
                     .build(id)
                     .toString());
             throw new WebApplicationException(Response.Status.CREATED);
         }
         catch (IllegalArgumentException ex) {
+            System.out.println(ex);
             throw new BadRequestException(ex);
         }
     }
