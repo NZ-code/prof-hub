@@ -44,7 +44,7 @@ public class CourseService implements Service<Course>{
     public Optional<Course> getById(UUID uuid) {
         return courseRepository.getById(uuid);
     }
-    @RolesAllowed(UserRoles.ADMIN)
+    @RolesAllowed(UserRoles.USER)
     @Override
     //@Transactional
     public void add(Course course) {
@@ -58,7 +58,7 @@ public class CourseService implements Service<Course>{
         lectureRepository.deleteByCourseId(course.getUuid());
     }
     //@Transactional
-    @RolesAllowed(UserRoles.ADMIN)
+    @RolesAllowed(UserRoles.USER)
     public void update(Course course) {
         courseRepository.update(course);
     }

@@ -48,10 +48,7 @@ public class LectureService implements Service<Lecture>{
                 return lectureRepository.getAll();
             }
             else{
-                String login = securityContext.getCallerPrincipal().getName();
-                System.out.println("Login:" + login);
-                Professor user = professorRepository.findByLogin(login)
-                        .orElseThrow(IllegalStateException::new);
+                Professor user = getProfessorFromSecurityContext();
                 return lectureRepository.findByUser(user);
             }
     }
@@ -63,10 +60,13 @@ public class LectureService implements Service<Lecture>{
 
     @Override
     //@Transactional
+    @RolesAllowed(UserRoles.USER)
     public void add(Lecture lecture) {
+        Professor user = getProfessorFromSecurityContext();
+        lecture.setProfessor(user);
         lectureRepository.add(lecture);
     }
-
+    @RolesAllowed(UserRoles.USER)
     public Optional<List<Lecture>> getAllByCourseId(UUID uuid) {
         System.out.println("course :" + courseRepository.getById(uuid));
         Optional<Course> course = courseRepository.getById(uuid);
@@ -77,11 +77,45 @@ public class LectureService implements Service<Lecture>{
         return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
     }
     //@Transactional
+    @RolesAllowed(UserRoles.USER)
     public void delete(UUID id) {
-        lectureRepository.delete(id);
+        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
+            lectureRepository.delete(id);
+        }
+        else{
+            Professor user = getProfessorFromSecurityContext();
+            var userLectures= lectureRepository.findByUser(user);
+            int size= userLectures.stream().filter(lecture -> lecture.getUuid().equals(id)).toList().size();
+            if(size >0){
+                lectureRepository.delete(id);
+            }
+
+        }
     }
+
+    private Professor getProfessorFromSecurityContext() {
+        String login = securityContext.getCallerPrincipal().getName();
+        System.out.println("Login:" + login);
+        Professor user = professorRepository.findByLogin(login)
+                .orElseThrow(IllegalStateException::new);
+        return user;
+    }
+
     //@Transactional
+    @RolesAllowed(UserRoles.USER)
     public void update(Lecture lecture) {
-        lectureRepository.update(lecture);
+
+        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
+            lectureRepository.update(lecture);
+        }
+        else{
+            Professor user = getProfessorFromSecurityContext();
+            var userLectures= lectureRepository.findByUser(user);
+            int size= userLectures.stream().filter(l -> l.getUuid().equals(lecture.getUuid())).toList().size();
+            if(size >0){
+                lectureRepository.update(lecture);
+            }
+
+        }
     }
 }

@@ -105,6 +105,7 @@ public class ProfessorService implements Service<Professor> {
     }
 
     //@Transactional
+
     public void update(Professor professor) {
         professorRepository.update(professor);
     }

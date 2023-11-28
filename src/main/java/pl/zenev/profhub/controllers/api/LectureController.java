@@ -17,6 +17,8 @@ public interface LectureController {
     @Produces(MediaType.APPLICATION_JSON)
     GetLecturesResponse getLectures();
 
+
+
     @GET
     @Path("/courses/{id}/lectures")
     @Produces(MediaType.APPLICATION_JSON)
