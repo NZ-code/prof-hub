@@ -37,8 +37,8 @@ import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 //)
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "jdbc/SimpleRpgCharacters",
-        callerQuery = "select password from professor where login = ?",
-        groupsQuery = "select role from users__roles where id = (select id from professor where login = ?)",
+        callerQuery = "select password from Professor where login = ?",
+        groupsQuery = "select role from users__roles where id = (select id from Professor where login = ?)",
         hashAlgorithm = Pbkdf2PasswordHash.class
 )
 public class AuthenticationConfig {

@@ -20,6 +20,8 @@ public class ProfessorsToResponse implements Function<List<Professor>, GetProfes
                                 .map(professor -> GetProfessorsResponse.Professor.builder()
                                         .id(professor.getId())
                                         .name(professor.getName())
+                                        .login(professor.getLogin())
+                                        .password(professor.getPassword())
                                         .build()).toList())
                 .build();
     }

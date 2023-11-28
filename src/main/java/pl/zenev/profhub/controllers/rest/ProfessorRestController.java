@@ -26,7 +26,6 @@ import java.util.UUID;
 
 @Path("")
 @Log
-@RolesAllowed(UserRoles.USER)
 public class ProfessorRestController implements ProfessorsController {
     private HttpServletResponse response;
     private ProfessorService professorService;

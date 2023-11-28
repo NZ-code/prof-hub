@@ -73,17 +73,30 @@ public class InitializedData {
     @PostConstruct
     @SneakyThrows
     private void init() {
-        if (professorService.find("admin").isEmpty()) {
+        if (professorService.getAll().size()<=1) {
             //requestContextController.activate();// start request scope in order to inject request scoped repositories
-            Professor professorNick = new Professor("Nick", 53);
-            Professor professorAlex = new Professor("Alex", 45);
-            Professor professorMary = new Professor("Mary", 76);
-            Professor professorJohn = new Professor("John", 88);
+            Professor professorNick = Professor.builder()
+                    .id(UUID.fromString("56804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
+                    .name("nick")
+                    .login("nick")
+                    .password("nick")
+                    .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
+                    .build();
+                    // new Professor("Nick", 53);
+            Professor professorAlex = Professor.builder()
+                    .id(UUID.fromString("67804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
+                    .name("alex")
+                    .login("alex")
+                    .password("alex")
+                    .roles(List.of(UserRoles.USER))
+                    .build();
+//            Professor professorMary = new Professor("Mary", 76);
+//            Professor professorJohn = new Professor("John", 88);
 
             professorService.add(professorNick);
             professorService.add(professorAlex);
-            professorService.add(professorMary);
-            professorService.add(professorJohn);
+//            professorService.add(professorMary);
+//            professorService.add(professorJohn);
 
 
             // courses and lectures
@@ -101,21 +114,21 @@ public class InitializedData {
             Lecture lectureA1 = new Lecture("Introduction, Financial Terms and Concepts", mathCourse, 106, professorNick);
             Lecture lectureA2 = new Lecture("Linear Algebra", mathCourse, 140, professorAlex);
 
-            Lecture lectureB1 = new Lecture("Radiation History to the Present", physicsCourse, 58, professorMary);
-            Lecture lectureB2 = new Lecture("Radiation Utilizing", physicsCourse, 169, professorMary);
+            //Lecture lectureB1 = new Lecture("Radiation History to the Present", physicsCourse, 58, professorMary);
+            //Lecture lectureB2 = new Lecture("Radiation Utilizing", physicsCourse, 169, professorMary);
 
-            Lecture lectureC1 = new Lecture("Atoms, compounds, and ions", physicsCourse, 134, professorMary);
-            Lecture lectureC2 = new Lecture("Electronic structure of atoms", physicsCourse, 168, professorJohn);
+            //Lecture lectureC1 = new Lecture("Atoms, compounds, and ions", physicsCourse, 134, professorMary);
+            //Lecture lectureC2 = new Lecture("Electronic structure of atoms", physicsCourse, 168, professorJohn);
 
 
             lectureService.add(lectureA1);
             lectureService.add(lectureA2);
 
-            lectureService.add(lectureB1);
-            lectureService.add(lectureB2);
-
-            lectureService.add(lectureC1);
-            lectureService.add(lectureC2);
+//            lectureService.add(lectureB1);
+//            lectureService.add(lectureB2);
+//
+//            lectureService.add(lectureC1);
+//            lectureService.add(lectureC2);
 
             System.out.println("------------------Presentation----------------");
             System.out.println("------------------Courses");

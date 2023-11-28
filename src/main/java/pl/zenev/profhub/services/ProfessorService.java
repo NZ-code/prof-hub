@@ -24,6 +24,7 @@ import java.util.UUID;
 @LocalBean
 @Stateless
 @NoArgsConstructor(force = true)
+@RolesAllowed(UserRoles.USER)
 public class ProfessorService implements Service<Professor> {
     private ProfessorRepository professorRepository;
     private ServletContext context;
@@ -41,7 +42,8 @@ public class ProfessorService implements Service<Professor> {
         this.passwordHash = passwordHash;
     }
 
-    @RolesAllowed(UserRoles.ADMIN)
+    @PermitAll
+    //@RolesAllowed(UserRoles.ADMIN)
     public List<Professor> getAll(){
         return professorRepository.getAll();
     }
@@ -55,6 +57,7 @@ public class ProfessorService implements Service<Professor> {
     //@Transactional
     @PermitAll
     public void add(Professor professor) {
+        professor.setPassword(passwordHash.generate(professor.getPassword().toCharArray()));
         professorRepository.add(professor);
     }
 
