@@ -13,6 +13,11 @@ import java.util.UUID;
 public interface LectureController {
 
     @GET
+    @Path("/lectures")
+    @Produces(MediaType.APPLICATION_JSON)
+    GetLecturesResponse getLectures();
+
+    @GET
     @Path("/courses/{id}/lectures")
     @Produces(MediaType.APPLICATION_JSON)
     GetLecturesResponse getCourseLectures(@PathParam("id") UUID id);

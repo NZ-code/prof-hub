@@ -24,11 +24,12 @@ import pl.zenev.profhub.services.CourseService;
 import pl.zenev.profhub.services.LectureService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Path("")
 @Log
-@RolesAllowed(UserRoles.USER)
+
 public class LectureRestController implements LectureController {
     LectureService lectureService;
     final LecturesToResponse lecturesToResponse;
@@ -57,6 +58,14 @@ public class LectureRestController implements LectureController {
     @EJB
     public void setCourseService(CourseService service) {
         this.courseService = service;
+    }
+
+
+    @Override
+    public GetLecturesResponse getLectures() {
+        return Optional.ofNullable(lectureService.getAll())
+                .map(lecturesToResponse)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override

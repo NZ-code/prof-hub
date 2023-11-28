@@ -5,7 +5,9 @@ import pl.zenev.profhub.dto.PutCourseRequest;
 import pl.zenev.profhub.dto.PutProfessorRequest;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Professor;
+import pl.zenev.profhub.security.UserRoles;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
@@ -17,6 +19,9 @@ public class RequestToProfessor implements BiFunction<UUID, PutProfessorRequest,
                 .builder()
                 .id(uuid)
                 .name(putProfessorRequest.getName())
+                .login(putProfessorRequest.getLogin())
+                .password(putProfessorRequest.getPassword())
+                .roles(List.of(UserRoles.USER))
                 .build();
     }
 }

@@ -42,8 +42,8 @@ public class ProfessorService implements Service<Professor> {
         this.passwordHash = passwordHash;
     }
 
-    @PermitAll
-    //@RolesAllowed(UserRoles.ADMIN)
+   // @PermitAll
+    @RolesAllowed(UserRoles.ADMIN)
     public List<Professor> getAll(){
         return professorRepository.getAll();
     }

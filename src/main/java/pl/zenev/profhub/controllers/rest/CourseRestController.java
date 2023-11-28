@@ -48,7 +48,7 @@ public class CourseRestController implements CourseController {
         this.requestToCourse = requestToCourse;
         this.patchRequestToCourse = patchRequestToCourse;
     }
-
+    @RolesAllowed(UserRoles.USER)
     @Override
     public GetCoursesResponse getCourses() {
         return coursesToResponse.apply(courseService.getAll());

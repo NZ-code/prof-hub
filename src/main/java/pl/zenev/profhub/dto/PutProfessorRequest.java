@@ -14,5 +14,6 @@ import java.util.Date;
 @EqualsAndHashCode
 public class PutProfessorRequest {
     private String name;
-
+    private String login;
+    private String password;
 }

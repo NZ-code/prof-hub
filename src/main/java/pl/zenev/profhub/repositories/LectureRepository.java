@@ -4,11 +4,13 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Lecture;
+import pl.zenev.profhub.entities.Professor;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +73,26 @@ public class LectureRepository implements Repository<Lecture>{
     public void update(Lecture lecture) {
 //        dataStorage.updateLecture(lecture);
         em.merge(lecture);
+    }
+
+    public Optional<Lecture> findByIdAndUser(UUID id, Professor professor) {
+        try {
+            return Optional.of(em
+                    .createQuery("select l from Lecture l where l.uuid = :id and l.professor = :professor", Lecture.class)
+                    .setParameter("professor", professor)
+                    .setParameter("id", id)
+                    .getSingleResult());
+        }
+        catch (NoResultException ex){
+            return Optional.empty();
+        }
+    }
+
+
+    public List<Lecture> findByUser(Professor professor) {
+        return em
+                .createQuery("select l from Lecture l where l.professor = :professor", Lecture.class)
+                .setParameter("professor", professor)
+                .getResultList();
     }
 }
