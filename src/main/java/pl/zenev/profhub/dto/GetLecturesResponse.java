@@ -24,6 +24,7 @@ public class GetLecturesResponse {
     public static class Lecture {
         private UUID id;
         private String name;
+        private String professor;
     }
 
     @Singular

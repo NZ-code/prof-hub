@@ -10,12 +10,12 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @ApplicationScoped
-public class PatchRequestToLecture implements BiFunction<UUID,PatchLectureRequest, Lecture> {
+public class PatchRequestToLecture implements BiFunction<Lecture,PatchLectureRequest, Lecture> {
     @Override
-    public Lecture apply(UUID id, PatchLectureRequest patchRequestToLecture) {
+    public Lecture apply(Lecture lecture, PatchLectureRequest patchRequestToLecture) {
         return Lecture
                 .builder()
-                .uuid(id)
+                .uuid(lecture.getUuid())
                 .name(patchRequestToLecture.getName())
                 .build();
     }

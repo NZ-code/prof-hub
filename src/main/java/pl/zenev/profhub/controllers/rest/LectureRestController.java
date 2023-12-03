@@ -117,14 +117,22 @@ public class LectureRestController implements LectureController {
     public void patchLecture(UUID courseId, UUID lectureId, PatchLectureRequest request) {
         try {
             courseService.getById(courseId).ifPresentOrElse(
-                    course ->{
-                        Lecture lecture = patchRequestToLecture.apply(lectureId, request);
-                        lecture.setCourse(course);
-                        lectureService.update(lecture);
-                    },
-                    () -> {
-                        throw new NotFoundException();
+                    course -> {
+                        Optional<Lecture> lectureOpt  = lectureService.getById(lectureId);
+                        if(lectureOpt.isPresent()){
+                            Lecture lecture = lectureOpt.get();
+                            patchRequestToLecture.apply(lecture, request);
+                            lecture.setCourse(course);
+                            lectureService.update(lecture);
+                        }
+                        else{
+                            throw new NotFoundException();
+
+                        }
                     }
+                    ,() -> {
+                                            throw new NotFoundException();
+                                        }
             );
             response.setHeader("Location", uriInfo.getBaseUriBuilder()
                     .path(LectureController.class, "getCourseLecture")

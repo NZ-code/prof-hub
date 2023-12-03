@@ -11,12 +11,14 @@ import java.util.function.Function;
 public class LecturesToResponse implements Function<List<Lecture>, GetLecturesResponse> {
     @Override
     public GetLecturesResponse apply(List<Lecture> l) {
+
         return GetLecturesResponse
                 .builder()
                 .lectures(l.stream()
                         .map(lecture -> GetLecturesResponse.Lecture.builder()
                                 .id(lecture.getUuid())
                                 .name(lecture.getName())
+                                .professor(lecture.getProfessor().getName()==null ? "" :lecture.getProfessor().getName())
                                 .build()
                         ).toList())
                 .build();

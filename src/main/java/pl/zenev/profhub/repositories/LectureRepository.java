@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.BadRequestException;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.datasources.DataStorage;
 import pl.zenev.profhub.entities.Course;
@@ -47,7 +48,13 @@ public class LectureRepository implements Repository<Lecture>{
 
     @Override
     public void add(Lecture lecture) {
-        em.persist(lecture);
+        try{
+            em.persist(lecture);
+
+        }
+        catch (Exception exception){
+            throw new BadRequestException(exception);
+        }
         //dataStorage.addLecture(lecture);
     }
 
