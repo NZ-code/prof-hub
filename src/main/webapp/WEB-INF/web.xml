@@ -38,7 +38,7 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>character</web-resource-name>
+            <web-resource-name>courses</web-resource-name>
             <url-pattern>/courses/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
@@ -48,11 +48,11 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>user</web-resource-name>
+            <web-resource-name>lectures</web-resource-name>
             <url-pattern>/lectures/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>admin</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
 
