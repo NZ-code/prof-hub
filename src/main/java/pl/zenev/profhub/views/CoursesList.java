@@ -1,5 +1,6 @@
 package pl.zenev.profhub.views;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -11,12 +12,16 @@ import pl.zenev.profhub.services.CourseService;
 @RequestScoped
 @Named
 public class CoursesList {
-    private final CourseService courseService;
+    private  CourseService courseService;
     private CoursesModel coursesList;
     private CoursesToModel coursesToModel;
-    @Inject
-    public CoursesList(CourseService courseService, CoursesToModel coursesToModel){
+
+    @EJB
+    public void setCourseService(CourseService courseService){
         this.courseService = courseService;
+    }
+    @Inject
+    public CoursesList( CoursesToModel coursesToModel){
         this.coursesToModel = coursesToModel;
     }
     public CoursesModel getCourses(){

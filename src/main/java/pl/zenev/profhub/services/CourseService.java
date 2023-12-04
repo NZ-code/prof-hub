@@ -5,6 +5,7 @@ import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.entities.Course;
@@ -24,27 +25,29 @@ import java.util.UUID;
 public class CourseService implements Service<Course>{
     private final CourseRepository courseRepository;
     private final LectureRepository lectureRepository;
+    private final SecurityContext securityContext;
     @Inject
-    public CourseService(CourseRepository courseRepository, LectureRepository lectureRepository) {
+    public CourseService(CourseRepository courseRepository, LectureRepository lectureRepository,  SecurityContext securityContext) {
         this.courseRepository = courseRepository;
         this.lectureRepository = lectureRepository;
+        this.securityContext = securityContext;
     }
 
 //    public List<Lecture> getCourseLectures(Course course){
 //        return lectureRepository.getLecturesByCourse(course);
 //    }
     @Override
-    @RolesAllowed(UserRoles.USER)
+    //@RolesAllowed(UserRoles.USER)
     public List<Course> getAll() {
         return courseRepository.getAll();
     }
 
     @Override
-    @RolesAllowed(UserRoles.USER)
+    //@RolesAllowed(UserRoles.USER)
     public Optional<Course> getById(UUID uuid) {
         return courseRepository.getById(uuid);
     }
-    @RolesAllowed(UserRoles.USER)
+    //@RolesAllowed(UserRoles.USER)
     @Override
     //@Transactional
     public void add(Course course) {
@@ -52,13 +55,13 @@ public class CourseService implements Service<Course>{
     }
 
     //@Transactional
-    @RolesAllowed(UserRoles.ADMIN)
+    //@RolesAllowed(UserRoles.ADMIN)
     public void delete(Course course) {
         courseRepository.delete(course);
         lectureRepository.deleteByCourseId(course.getUuid());
     }
     //@Transactional
-    @RolesAllowed(UserRoles.USER)
+    //@RolesAllowed(UserRoles.USER)
     public void update(Course course) {
         courseRepository.update(course);
     }

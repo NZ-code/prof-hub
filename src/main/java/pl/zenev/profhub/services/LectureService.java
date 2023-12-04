@@ -22,7 +22,7 @@ import java.util.UUID;
 @LocalBean
 @Stateless
 @NoArgsConstructor(force = true)
-@RolesAllowed(UserRoles.USER)
+//@RolesAllowed(UserRoles.USER)
 public class LectureService implements Service<Lecture>{
     final LectureRepository lectureRepository;
     final CourseRepository courseRepository;
@@ -37,7 +37,7 @@ public class LectureService implements Service<Lecture>{
     }
 
     @Override
-    @RolesAllowed(UserRoles.USER)
+   // @RolesAllowed(UserRoles.USER)
     public List<Lecture> getAll() {
         String l = securityContext.getCallerPrincipal().getName();
         System.out.println("Login:" + l);
@@ -66,7 +66,7 @@ public class LectureService implements Service<Lecture>{
         lecture.setProfessor(user);
         lectureRepository.add(lecture);
     }
-    @RolesAllowed(UserRoles.USER)
+    //@RolesAllowed(UserRoles.USER)
     public Optional<List<Lecture>> getAllByCourseId(UUID uuid) {
         System.out.println("course :" + courseRepository.getById(uuid));
         Optional<Course> course = courseRepository.getById(uuid);
@@ -77,7 +77,7 @@ public class LectureService implements Service<Lecture>{
         return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
     }
     //@Transactional
-    @RolesAllowed(UserRoles.USER)
+    //@RolesAllowed(UserRoles.USER)
     public void delete(UUID id) {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             lectureRepository.delete(id);
@@ -102,7 +102,7 @@ public class LectureService implements Service<Lecture>{
     }
 
     //@Transactional
-    @RolesAllowed(UserRoles.USER)
+    //@RolesAllowed(UserRoles.USER)
     public void update(Lecture lecture) {
 
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {

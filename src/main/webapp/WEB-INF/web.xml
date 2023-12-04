@@ -18,10 +18,10 @@
         <param-value>Development</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
-        <param-value>true</param-value>
-    </context-param>
+<!--    <context-param>-->
+<!--        <param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>-->
+<!--        <param-value>true</param-value>-->
+<!--    </context-param>-->
 
     <servlet>
         <servlet-name>facesServlet</servlet-name>
@@ -38,8 +38,8 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>courses</web-resource-name>
-            <url-pattern>/courses/*</url-pattern>
+            <web-resource-name>course</web-resource-name>
+            <url-pattern>/course/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>user</role-name>

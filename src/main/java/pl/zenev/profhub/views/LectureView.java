@@ -1,5 +1,6 @@
 package pl.zenev.profhub.views;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -30,11 +31,14 @@ public class LectureView implements Serializable {
 
     private LectureService lectureService;
     private LectureToModel lectureToModel;
+    @EJB
+    public void setLectureService(LectureService lectureService) {
+        this.lectureService = lectureService;
+    }
 
     @Inject
-    public LectureView(LectureService lectureService, LectureToModel lectureToModel){
+    public LectureView( LectureToModel lectureToModel){
         this.lectureToModel = lectureToModel;
-        this.lectureService = lectureService;
     }
     public void init() throws IOException {
         UUID uuid = UUID.fromString(id);
