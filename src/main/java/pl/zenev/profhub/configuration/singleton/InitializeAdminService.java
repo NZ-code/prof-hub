@@ -1,10 +1,8 @@
 package pl.zenev.profhub.configuration.singleton;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.ejb.Singleton;
-import jakarta.ejb.Startup;
-import jakarta.ejb.TransactionAttribute;
-import jakarta.ejb.TransactionAttributeType;
+import jakarta.ejb.*;
+import jakarta.enterprise.context.control.RequestContextController;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import lombok.NoArgsConstructor;
@@ -24,21 +22,27 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 public class InitializeAdminService {
 
+    //private final Pbkdf2PasswordHash passwordHash;
+    //private final ProfessorRepository professorRepository;
+    private ProfessorService professorService;
     private final Pbkdf2PasswordHash passwordHash;
-    private final ProfessorRepository professorRepository;
+    @EJB
+    public void setProfessorService(ProfessorService professorService) {
+        this.professorService = professorService;
+    }
 
     @Inject
     public InitializeAdminService(
-            ProfessorRepository professorRepository,
+            RequestContextController requestContextController,
             @SuppressWarnings("CdiInjectionPointsInspection") Pbkdf2PasswordHash passwordHash
     ) {
-        this.professorRepository = professorRepository;
+
         this.passwordHash = passwordHash;
     }
     @PostConstruct
     @SneakyThrows
     private void init() {
-        if (professorRepository.findByLogin("admin-service").isEmpty()) {
+        if (professorService.find("admin-service").isEmpty()) {
 
             Professor admin = Professor.builder()
                     .id(UUID.fromString("14d59f3a-057c-44d5-825a-19295a6600a8"))
@@ -49,7 +53,7 @@ public class InitializeAdminService {
                     .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
                     .build();
 
-            professorRepository.add(admin);
+            professorService.add(admin);
         }
     }
 }

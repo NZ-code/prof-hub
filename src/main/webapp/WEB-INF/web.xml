@@ -39,7 +39,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>course</web-resource-name>
-            <url-pattern>/course/*</url-pattern>
+            <url-pattern>/courses/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>user</role-name>
@@ -56,6 +56,15 @@
         </auth-constraint>
     </security-constraint>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>user</web-resource-name>
+            <url-pattern>/professors/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
     <security-role>
         <role-name>admin</role-name>
     </security-role>

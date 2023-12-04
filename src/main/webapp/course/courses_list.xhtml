@@ -18,13 +18,13 @@
                     <h:outputText value="#{course.name}"/>
                 </h:column>
 
-                <h:column>
+                <h:column >
                     <f:facet name="header">View</f:facet>
                     <h:link outcome="/course/course_view.xhtml" value="View">
                         <f:param name="id" value="#{course.id}"/>
                     </h:link>
                 </h:column>
-                <h:column>
+                <h:column rendered="#{coursesList.canDelete}">
                     <f:facet name="header">Delete</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="Delete"

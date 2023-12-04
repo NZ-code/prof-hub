@@ -4,6 +4,7 @@ import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import lombok.Getter;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.models.CoursesModel;
 import pl.zenev.profhub.helpers.CoursesToModel;
@@ -15,6 +16,9 @@ public class CoursesList {
     private  CourseService courseService;
     private CoursesModel coursesList;
     private CoursesToModel coursesToModel;
+
+    @Getter
+    private boolean canDelete = false;
 
     @EJB
     public void setCourseService(CourseService courseService){

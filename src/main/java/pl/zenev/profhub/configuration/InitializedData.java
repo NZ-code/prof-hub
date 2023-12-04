@@ -11,6 +11,7 @@ import jakarta.enterprise.context.control.RequestContextController;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import jakarta.servlet.annotation.WebListener;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -28,19 +29,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Singleton
-@Startup
+//@Singleton
+//@Startup
+//@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+//@NoArgsConstructor
+//@DependsOn("InitializeAdminService")
+//@DeclareRoles({UserRoles.ADMIN, UserRoles.USER})
+//@RunAs(UserRoles.ADMIN)
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-@NoArgsConstructor
-@DependsOn("InitializeAdminService")
-@DeclareRoles({UserRoles.ADMIN, UserRoles.USER})
-@RunAs(UserRoles.ADMIN)
-@Log
+@ApplicationScoped
+//@Log
 public class InitializedData {
+    private static boolean INITIALIZED = false;
+    private Pbkdf2PasswordHash passwordHash;
     private CourseService courseService;
     private ProfessorService professorService;
     //private RequestContextController requestContextController;
     private LectureService lectureService;
+    private final RequestContextController requestContextController;
 
     @Inject
     private SecurityContext securityContext;
@@ -69,8 +75,19 @@ public class InitializedData {
 //    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
 //        init();
 //    }
-
-    @PostConstruct
+    @Inject
+    public InitializedData(RequestContextController requestContextController, Pbkdf2PasswordHash passwordHash){
+        this.requestContextController = requestContextController;
+        this.passwordHash = passwordHash;
+    }
+    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
+        requestContextController.activate();
+        if (professorService.getAll().isEmpty() && lectureService.getAll().isEmpty() && courseService.getAll().isEmpty()){
+            init();
+        }
+        requestContextController.deactivate();
+    }
+    //@PostConstruct
     @SneakyThrows
     private void init() {
         if (professorService.getAll().size()<=1) {

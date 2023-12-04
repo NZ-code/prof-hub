@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Lecture;
@@ -18,6 +19,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static pl.zenev.profhub.security.UserRoles.ADMIN;
+
 
 @LocalBean
 @Stateless
@@ -26,11 +29,16 @@ public class CourseService implements Service<Course>{
     private final CourseRepository courseRepository;
     private final LectureRepository lectureRepository;
     private final SecurityContext securityContext;
+    @Getter
+    private boolean canDelete = false;
     @Inject
     public CourseService(CourseRepository courseRepository, LectureRepository lectureRepository,  SecurityContext securityContext) {
         this.courseRepository = courseRepository;
         this.lectureRepository = lectureRepository;
         this.securityContext = securityContext;
+        if (securityContext.isCallerInRole(ADMIN)){
+            this.canDelete = true;
+        }
     }
 
 //    public List<Lecture> getCourseLectures(Course course){
