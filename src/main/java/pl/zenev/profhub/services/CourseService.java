@@ -1,5 +1,6 @@
 package pl.zenev.profhub.services;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -51,17 +52,25 @@ public class CourseService implements Service<Course>{
     }
 
     @Override
-    //@RolesAllowed(UserRoles.USER)
+    @RolesAllowed(UserRoles.USER)
     public Optional<Course> getById(UUID uuid) {
         return courseRepository.getById(uuid);
     }
     //@RolesAllowed(UserRoles.USER)
+
+    public List<Course> getAllInit() {
+        return courseRepository.getAll();
+    }
+
     @Override
+    //@PermitAll
     //@Transactional
     public void add(Course course) {
         courseRepository.add(course);
     }
-
+    public void addInit(Course course) {
+        courseRepository.add(course);
+    }
     //@Transactional
     //@RolesAllowed(UserRoles.ADMIN)
     public void delete(Course course) {

@@ -1,6 +1,7 @@
 package pl.zenev.profhub.controllers.rest;
 
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
@@ -23,12 +24,15 @@ import pl.zenev.profhub.services.CourseService;
 
 import java.util.UUID;
 
+import static pl.zenev.profhub.security.UserRoles.ADMIN;
+import static pl.zenev.profhub.security.UserRoles.USER;
+
 @Path("")
 @Log
-@RolesAllowed(UserRoles.ADMIN)//Secure implementation, not the interface
+//@RolesAllowed(UserRoles.ADMIN)//Secure implementation, not the interface
 public class CourseRestController implements CourseController {
     private HttpServletResponse response;
-    private final CourseService courseService;
+    private CourseService courseService;
     private final UriInfo uriInfo;
     private final CoursesToResponse coursesToResponse;
     private final CourseToResponse courseToResponse;
@@ -39,28 +43,35 @@ public class CourseRestController implements CourseController {
         this.response = response;
     }
 
+
     @Inject
-    public CourseRestController(CourseService courseService, UriInfo uriInfo, CoursesToResponse coursesToResponse, CourseToResponse courseToResponse, RequestToCourse requestToCourse, PatchRequestToCourse patchRequestToCourse) {
-        this.courseService = courseService;
+    public CourseRestController( UriInfo uriInfo, CoursesToResponse coursesToResponse, CourseToResponse courseToResponse, RequestToCourse requestToCourse, PatchRequestToCourse patchRequestToCourse) {
+
         this.uriInfo = uriInfo;
         this.coursesToResponse = coursesToResponse;
         this.courseToResponse = courseToResponse;
         this.requestToCourse = requestToCourse;
         this.patchRequestToCourse = patchRequestToCourse;
     }
-    @RolesAllowed(UserRoles.USER)
+
+    @EJB
+    public void setCourseService(CourseService courseService){
+        this.courseService = courseService;
+    }
+    @RolesAllowed(USER)
     @Override
     public GetCoursesResponse getCourses() {
         return coursesToResponse.apply(courseService.getAll());
     }
 
+    @RolesAllowed(USER)
     @Override
     public GetCourseResponse getCourse(UUID id) {
         return courseService.getById(id).map(
                 courseToResponse
         ).orElseThrow(NotFoundException::new);
     }
-
+    @RolesAllowed(ADMIN)
     @Override
     public void putCourse(UUID id, PutCourseRequest request) {
         try{
@@ -76,13 +87,13 @@ public class CourseRestController implements CourseController {
             throw new BadRequestException(ex);
         }
     }
-
+    @RolesAllowed(ADMIN)
     @Override
     public void deleteCourse(UUID id) {
         Course course = courseService.getById(id).orElseThrow(NotFoundException::new);
         courseService.delete(course);
     }
-
+    @RolesAllowed(ADMIN)
     @Override
     public void patchCourse(UUID id, PatchCourseRequest request) {
         courseService.getById(id).ifPresentOrElse(

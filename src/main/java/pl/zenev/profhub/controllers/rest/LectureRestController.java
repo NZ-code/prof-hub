@@ -1,5 +1,6 @@
 package pl.zenev.profhub.controllers.rest;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
@@ -27,9 +28,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static pl.zenev.profhub.security.UserRoles.ADMIN;
+import static pl.zenev.profhub.security.UserRoles.USER;
+
 @Path("")
 @Log
-
+@RolesAllowed(USER)
 public class LectureRestController implements LectureController {
     LectureService lectureService;
     final LecturesToResponse lecturesToResponse;
@@ -62,6 +66,7 @@ public class LectureRestController implements LectureController {
 
 
     @Override
+    @RolesAllowed(ADMIN)
     public GetLecturesResponse getLectures() {
         return Optional.ofNullable(lectureService.getAll())
                 .map(lecturesToResponse)
@@ -69,6 +74,7 @@ public class LectureRestController implements LectureController {
     }
 
     @Override
+    @PermitAll
     public GetLecturesResponse getCourseLectures(UUID id) {
         System.out.println("controller");
         return lectureService.getAllByCourseId(id)
@@ -77,6 +83,7 @@ public class LectureRestController implements LectureController {
     }
 
     @Override
+    @PermitAll
     public GetLectureResponse getCourseLecture(UUID courseId, UUID lectureId) {
         return lectureService.getAllByCourseId(courseId)
                 .map(lectures -> lectures.stream().filter(lecture -> lecture.getUuid().equals(lectureId)).findFirst()
@@ -87,6 +94,7 @@ public class LectureRestController implements LectureController {
     }
 
     @Override
+    @RolesAllowed(USER)
     public void putLecture(UUID courseId, UUID lectureId, PutLectureRequest request) {
         try {
             courseService.getById(courseId).ifPresentOrElse(
@@ -114,6 +122,7 @@ public class LectureRestController implements LectureController {
     }
 
     @Override
+    @RolesAllowed(USER)
     public void patchLecture(UUID courseId, UUID lectureId, PatchLectureRequest request) {
         try {
             courseService.getById(courseId).ifPresentOrElse(
@@ -143,7 +152,7 @@ public class LectureRestController implements LectureController {
             throw new BadRequestException(ex);
         }
     }
-
+    @RolesAllowed(USER)
     @Override
     public void deleteLecture(UUID courseId, UUID lectureId) {
 

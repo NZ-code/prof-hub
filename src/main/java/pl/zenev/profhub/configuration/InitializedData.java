@@ -82,7 +82,7 @@ public class InitializedData {
     }
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
         requestContextController.activate();
-        if (professorService.getAll().isEmpty() && lectureService.getAll().isEmpty() && courseService.getAll().isEmpty()){
+        if (professorService.getAll().size()<=1 && lectureService.getAllInit().isEmpty() && courseService.getAllInit().isEmpty()){
             init();
         }
         requestContextController.deactivate();
@@ -90,7 +90,7 @@ public class InitializedData {
     //@PostConstruct
     @SneakyThrows
     private void init() {
-        if (professorService.getAll().size()<=1) {
+        //if (professorService.getAll().size()<=1) {
             //requestContextController.activate();// start request scope in order to inject request scoped repositories
             Professor professorNick = Professor.builder()
                     .id(UUID.fromString("56804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
@@ -124,9 +124,9 @@ public class InitializedData {
             Course physicsCourse = new Course("Introduction to Nuclear Engineering", new Date(2023, 10, 22), Domain.PHYSICS);
             Course chemistryCourse = new Course("Chemistry for Beginners", new Date(2023, 10, 22), Domain.CHEMISTRY);
 
-            courseService.add(mathCourse);
-            courseService.add(physicsCourse);
-            courseService.add(chemistryCourse);
+            courseService.addInit(mathCourse);
+            courseService.addInit(physicsCourse);
+            courseService.addInit(chemistryCourse);
 
             Lecture lectureA1 = new Lecture("Introduction, Financial Terms and Concepts", mathCourse, 106, professorNick);
             Lecture lectureA2 = new Lecture("Linear Algebra", mathCourse, 140, professorAlex);
@@ -138,8 +138,8 @@ public class InitializedData {
             //Lecture lectureC2 = new Lecture("Electronic structure of atoms", physicsCourse, 168, professorJohn);
 
 
-            lectureService.add(lectureA1);
-            lectureService.add(lectureA2);
+            lectureService.addInit(lectureA1);
+            lectureService.addInit(lectureA2);
 
 //            lectureService.add(lectureB1);
 //            lectureService.add(lectureB2);
@@ -149,16 +149,16 @@ public class InitializedData {
 
             System.out.println("------------------Presentation----------------");
             System.out.println("------------------Courses");
-            List<Course> courseList = courseService.getAll();
-            List<Lecture> lecturesList = lectureService.getAll();
-            for (var course : courseList) {
-                System.out.println(course);
-            }
-            System.out.println("------------------Lectures");
-            for (var lecture : lecturesList) {
-                System.out.println(lecture);
-            }
+           // List<Course> courseList = courseService.getAll();
+        //List<Lecture> lecturesList = lectureService.getAll();
+//            for (var course : courseList) {
+//                System.out.println(course);
+//            }
+//            System.out.println("------------------Lectures");
+//            for (var lecture : lecturesList) {
+//                System.out.println(lecture);
+//            }
             //requestContextController.deactivate();
         }
-    }
+   // }
 }

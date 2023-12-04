@@ -1,7 +1,9 @@
 package pl.zenev.profhub.controllers.rest;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
@@ -23,6 +25,8 @@ import pl.zenev.profhub.services.CourseService;
 import pl.zenev.profhub.services.ProfessorService;
 
 import java.util.UUID;
+
+import static pl.zenev.profhub.security.UserRoles.ADMIN;
 
 @Path("")
 @Log
@@ -60,6 +64,7 @@ public class ProfessorRestController implements ProfessorsController {
         return professorsToResponse.apply(professorService.getAll());
     }
 
+    @RolesAllowed(ADMIN)
     @Override
     public GetProfessorResponse getProfessor(UUID id) {
         return professorService.getById(id).map(
@@ -67,6 +72,7 @@ public class ProfessorRestController implements ProfessorsController {
         ).orElseThrow(NotFoundException::new);
     }
 
+    @RolesAllowed(ADMIN)
     @Override
     public void putProfessor(UUID id, PutProfessorRequest request) {
         try{
@@ -85,12 +91,14 @@ public class ProfessorRestController implements ProfessorsController {
     }
 
     @Override
+    @RolesAllowed(ADMIN)
     public void deleteProfessor(UUID id) {
         Professor professor = professorService.getById(id).orElseThrow(NotFoundException::new);
         professorService.delete(professor);
     }
 
     @Override
+    @RolesAllowed(ADMIN)
     public void patchProfessor(UUID id, PatchProfessorRequest request) {
         professorService.getById(id).ifPresentOrElse(
                 entity ->  professorService.update(patchRequestToProfessor.apply(entity, request)),

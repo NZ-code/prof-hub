@@ -1,5 +1,6 @@
 package pl.zenev.profhub.services;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -14,6 +15,7 @@ import pl.zenev.profhub.repositories.LectureRepository;
 import pl.zenev.profhub.repositories.ProfessorRepository;
 import pl.zenev.profhub.security.UserRoles;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -60,10 +62,15 @@ public class LectureService implements Service<Lecture>{
 
     @Override
     //@Transactional
+    //@PermitAll
     @RolesAllowed(UserRoles.USER)
     public void add(Lecture lecture) {
         Professor user = getProfessorFromSecurityContext();
         lecture.setProfessor(user);
+        lectureRepository.add(lecture);
+    }
+    public void addInit(Lecture lecture) {
+
         lectureRepository.add(lecture);
     }
     //@RolesAllowed(UserRoles.USER)
@@ -117,5 +124,9 @@ public class LectureService implements Service<Lecture>{
             }
 
         }
+    }
+
+    public List<Lecture> getAllInit() {
+        return lectureRepository.getAll();
     }
 }

@@ -31,9 +31,9 @@ import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 //)
 //@CustomFormAuthenticationMechanismDefinition(
 //        loginToContinue = @LoginToContinue(
-//                loginPage = "/authentication/custom/login.xhtml",
-//                errorPage = "/authentication/custom/login_error.xhtml",
-//                useForwardToLogin = true
+//                loginPage = "/authentication/custom/login.xhtml"
+//                //errorPage = "/authentication/custom/login_error.xhtml",
+//                //useForwardToLogin = true
 //        )
 //)
 @DatabaseIdentityStoreDefinition(

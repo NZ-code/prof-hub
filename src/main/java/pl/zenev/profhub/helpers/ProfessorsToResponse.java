@@ -22,6 +22,7 @@ public class ProfessorsToResponse implements Function<List<Professor>, GetProfes
                                         .name(professor.getName())
                                         .login(professor.getLogin())
                                         .password(professor.getPassword())
+                                        .role(professor.getRoles().toString())
                                         .build()).toList())
                 .build();
     }

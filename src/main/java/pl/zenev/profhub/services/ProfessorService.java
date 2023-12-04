@@ -125,7 +125,7 @@ public class ProfessorService implements Service<Professor> {
     }
 
     //@Transactional
-
+    @RolesAllowed(UserRoles.ADMIN)
     public void update(Professor professor) {
         professorRepository.update(professor);
     }
@@ -140,4 +140,6 @@ public class ProfessorService implements Service<Professor> {
                 .map(user -> passwordHash.verify(password.toCharArray(), user.getPassword()))
                 .orElse(false);
     }
+
+
 }
