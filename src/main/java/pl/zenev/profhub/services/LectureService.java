@@ -81,13 +81,27 @@ public class LectureService implements Service<Lecture>{
     }
     //@RolesAllowed(UserRoles.USER)
     public Optional<List<Lecture>> getAllByCourseId(UUID uuid) {
-        System.out.println("course :" + courseRepository.getById(uuid));
-        Optional<Course> course = courseRepository.getById(uuid);
-        if(course.isEmpty()){
-            return Optional.empty();
+        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
+            System.out.println("course :" + courseRepository.getById(uuid));
+            Optional<Course> course = courseRepository.getById(uuid);
+            if (course.isEmpty()) {
+                return Optional.empty();
+            }
+            System.out.println("lectureRepository.getLecturesByCourseId(uuid)=" + lectureRepository.getLecturesByCourseId(uuid));
+            return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
         }
-        System.out.println("lectureRepository.getLecturesByCourseId(uuid)="+ lectureRepository.getLecturesByCourseId(uuid));
-        return Optional.ofNullable(lectureRepository.getLecturesByCourseId(uuid));
+        else {
+            System.out.println("course :" + courseRepository.getById(uuid));
+            Optional<Course> course = courseRepository.getById(uuid);
+            if (course.isEmpty()) {
+                return Optional.empty();
+            }
+            System.out.println("lectureRepository.getLecturesByCourseId(uuid)=" + lectureRepository.getLecturesByCourseId(uuid));
+            Optional<List<Lecture>> lectures = Optional.of(lectureRepository.getLecturesByCourseId(uuid).stream().filter(
+                    lecture -> lecture.getProfessor().getName().equals(securityContext.getCallerPrincipal().getName())
+            ).toList());
+            return lectures;
+        }
     }
     //@Transactional
     //@RolesAllowed(UserRoles.USER)
