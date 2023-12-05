@@ -20,6 +20,7 @@ public class UpdateLectureWithModel implements BiFunction<Lecture, LectureEditMo
                 .version(lectureEditModel.getVersion())
                 .professor(lecture.getProfessor())
                 .course(lecture.getCourse())
+                .creationDateTime(lecture.getCreationDateTime())
                 .build();
     }
 }
