@@ -17,6 +17,7 @@ public class LectureToModel  implements Function<Lecture, LectureModel> {
                 .creationDateTime(lecture.getCreationDateTime())
                 .updateDateTime(lecture.getUpdateDateTime())
                 .lengthInMinutes(lecture.getLengthInMinutes())
+                .version(lecture.getVersion())
                 .build();
     }
 }

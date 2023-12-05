@@ -18,6 +18,7 @@ public class LectureModel {
     private UUID id;
     private String name;
     private float lengthInMinutes;
+    private long version;
     private LocalDateTime creationDateTime;
     private LocalDateTime updateDateTime;
 }

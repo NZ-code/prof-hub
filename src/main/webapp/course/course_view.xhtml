@@ -40,6 +40,10 @@
                     <h:outputText value="#{lecture.updateDateTime}"/>
                 </h:column>
                 <h:column>
+                    <f:facet name="header">version</f:facet>
+                    <h:outputText value="#{lecture.version}"/>
+                </h:column>
+                <h:column>
                     <f:facet name="header">View</f:facet>
                     <h:link outcome="/lecture/lecture_view.xhtml" value="View">
                         <f:param name="id" value="#{lecture.id}"/>

@@ -18,6 +18,7 @@ public class LecturesToModel implements Function<List<Lecture>, LecturesModel>, 
                         .map(lecture -> LecturesModel
                                 .Lecture
                                 .builder()
+                                .version(lecture.getVersion())
                                 .name(lecture.getName())
                                 .creationDateTime(lecture.getCreationDateTime())
                                 .updateDateTime(lecture.getUpdateDateTime())
