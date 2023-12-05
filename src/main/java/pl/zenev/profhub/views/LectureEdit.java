@@ -34,7 +34,7 @@ public class LectureEdit implements Serializable {
     private LectureEditModel lecture;
 
     private LectureService lectureService;
-    private LectureToModel lectureToModel;
+
     private final FacesContext facesContext;
     private final UpdateLectureWithModel updateLectureWithModelFunction ;
     private final LectureToEditModel lectureToEditModel ;
@@ -44,8 +44,8 @@ public class LectureEdit implements Serializable {
     }
 
     @Inject
-    public LectureEdit(LectureToModel lectureToModel, FacesContext facesContext, UpdateLectureWithModel updateLectureWithModelFunction, LectureToEditModel lectureToEditModel){
-        this.lectureToModel = lectureToModel;
+    public LectureEdit(FacesContext facesContext, UpdateLectureWithModel updateLectureWithModelFunction, LectureToEditModel lectureToEditModel){
+
         this.facesContext = facesContext;
         this.updateLectureWithModelFunction = updateLectureWithModelFunction;
         this.lectureToEditModel = lectureToEditModel;

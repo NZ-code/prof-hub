@@ -127,7 +127,7 @@ public class LectureService implements Service<Lecture>{
     //@Transactional
     //@RolesAllowed(UserRoles.USER)
     public void update(Lecture lecture) {
-
+        System.out.println("Updating lecture: " + lecture);
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             lectureRepository.update(lecture);
             if (securityContext.getCallerPrincipal() != null){

@@ -15,9 +15,11 @@ public class UpdateLectureWithModel implements BiFunction<Lecture, LectureEditMo
     public Lecture apply(Lecture lecture, LectureEditModel lectureEditModel) {
         return Lecture.builder()
                 .uuid(lecture.getUuid())
-                .name(lecture.getName())
+                .name(lectureEditModel.getName())
                 .lengthInMinutes(lectureEditModel.getLengthInMinutes())
                 .version(lectureEditModel.getVersion())
+                .professor(lecture.getProfessor())
+                .course(lecture.getCourse())
                 .build();
     }
 }
