@@ -14,6 +14,8 @@ public class LectureToModel  implements Function<Lecture, LectureModel> {
         return LectureModel.builder()
                 .id(lecture.getUuid())
                 .name(lecture.getName())
+                .creationDateTime(lecture.getCreationDateTime())
+                .updateDateTime(lecture.getUpdateDateTime())
                 .lengthInMinutes(lecture.getLengthInMinutes())
                 .build();
     }

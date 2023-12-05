@@ -4,6 +4,7 @@ package pl.zenev.profhub.models;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -17,4 +18,6 @@ public class LectureModel {
     private UUID id;
     private String name;
     private float lengthInMinutes;
+    private LocalDateTime creationDateTime;
+    private LocalDateTime updateDateTime;
 }

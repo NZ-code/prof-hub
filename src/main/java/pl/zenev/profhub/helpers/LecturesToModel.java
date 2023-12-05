@@ -19,6 +19,8 @@ public class LecturesToModel implements Function<List<Lecture>, LecturesModel>, 
                                 .Lecture
                                 .builder()
                                 .name(lecture.getName())
+                                .creationDateTime(lecture.getCreationDateTime())
+                                .updateDateTime(lecture.getUpdateDateTime())
                                 .lengthInMinutes(lecture.getLengthInMinutes())
                                 .id(lecture.getUuid()).build())
                         .toList())

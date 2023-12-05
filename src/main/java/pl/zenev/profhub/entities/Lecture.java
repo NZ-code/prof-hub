@@ -1,12 +1,11 @@
 package pl.zenev.profhub.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import pl.zenev.profhub.entity.VersionAndCreationDateAuditable;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
@@ -14,10 +13,10 @@ import java.util.UUID;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
+@ToString(callSuper = true)
 @EqualsAndHashCode
 @Entity
-public class Lecture {
+public class Lecture extends VersionAndCreationDateAuditable implements Serializable {
     @Id
     private UUID uuid;
     private float lengthInMinutes;
@@ -29,6 +28,18 @@ public class Lecture {
     @ManyToOne
     @JoinColumn(name = "professor")
     private Professor professor;
+
+    @PrePersist
+    @Override
+    public void updateCreationDateTime() {
+        super.updateCreationDateTime();
+    }
+
+    @PreUpdate
+    @Override
+    public void updateUpdateDateTime() {
+        super.updateUpdateDateTime();
+    }
 
     public Lecture( String name, Course course, float lengthInMinutes, Professor professor) {
         this.name = name;

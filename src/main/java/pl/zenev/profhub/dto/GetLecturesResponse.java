@@ -3,6 +3,7 @@ package pl.zenev.profhub.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +26,9 @@ public class GetLecturesResponse {
         private UUID id;
         private String name;
         private String professor;
+        private Long version;
+        private LocalDateTime creationDateTime;
+        private LocalDateTime updateDateTime;
     }
 
     @Singular

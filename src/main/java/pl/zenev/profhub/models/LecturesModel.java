@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +28,8 @@ public class LecturesModel  {
         private UUID id;
         private float lengthInMinutes;
         private String name;
+        private LocalDateTime creationDateTime;
+        private LocalDateTime updateDateTime;
     }
 
     @Singular
