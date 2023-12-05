@@ -10,6 +10,7 @@ import jakarta.security.enterprise.SecurityContext;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Lecture;
 import pl.zenev.profhub.repositories.CourseRepository;
@@ -30,13 +31,16 @@ public class CourseService implements Service<Course>{
     private final CourseRepository courseRepository;
     private final LectureRepository lectureRepository;
     private final SecurityContext securityContext;
+    private final Logger logger;;
     @Getter
     private boolean canDelete = false;
     @Inject
-    public CourseService(CourseRepository courseRepository, LectureRepository lectureRepository,  SecurityContext securityContext) {
+    public CourseService(CourseRepository courseRepository, LectureRepository lectureRepository,  SecurityContext securityContext
+            ,Logger logger) {
         this.courseRepository = courseRepository;
         this.lectureRepository = lectureRepository;
         this.securityContext = securityContext;
+        this.logger = logger;
         if (securityContext.isCallerInRole(ADMIN)){
             this.canDelete = true;
         }
@@ -76,6 +80,7 @@ public class CourseService implements Service<Course>{
     public void delete(Course course) {
         courseRepository.delete(course);
         lectureRepository.deleteByCourseId(course.getUuid());
+
     }
     //@Transactional
     //@RolesAllowed(UserRoles.USER)

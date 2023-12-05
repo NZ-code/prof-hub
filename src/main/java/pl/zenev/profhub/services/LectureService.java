@@ -1,12 +1,12 @@
 package pl.zenev.profhub.services;
 
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
 import pl.zenev.profhub.entities.Course;
 import pl.zenev.profhub.entities.Lecture;
 import pl.zenev.profhub.entities.Professor;
@@ -15,7 +15,6 @@ import pl.zenev.profhub.repositories.LectureRepository;
 import pl.zenev.profhub.repositories.ProfessorRepository;
 import pl.zenev.profhub.security.UserRoles;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,12 +29,14 @@ public class LectureService implements Service<Lecture>{
     final CourseRepository courseRepository;
     private final SecurityContext securityContext;
     private final ProfessorRepository professorRepository;
+    private final Logger logger;
     @Inject
-    public LectureService(LectureRepository lectureRepository, CourseRepository courseRepository, SecurityContext securityContext, ProfessorRepository professorRepository) {
+    public LectureService(LectureRepository lectureRepository, CourseRepository courseRepository, SecurityContext securityContext, ProfessorRepository professorRepository, Logger logger) {
         this.lectureRepository = lectureRepository;
         this.courseRepository = courseRepository;
         this.securityContext = securityContext;
         this.professorRepository = professorRepository;
+        this.logger = logger;
     }
 
     @Override
@@ -68,6 +69,11 @@ public class LectureService implements Service<Lecture>{
         Professor user = getProfessorFromSecurityContext();
         lecture.setProfessor(user);
         lectureRepository.add(lecture);
+        if (securityContext.getCallerPrincipal() != null){
+            Professor userForLog = professorRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                    .orElseThrow(IllegalStateException::new);
+            logger.info("User" + userForLog.getId() + "created lecture with id " + lecture.getUuid());
+        }
     }
     public void addInit(Lecture lecture) {
 
@@ -88,6 +94,11 @@ public class LectureService implements Service<Lecture>{
     public void delete(UUID id) {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             lectureRepository.delete(id);
+            if (securityContext.getCallerPrincipal() != null){
+                Professor userForLog = professorRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                        .orElseThrow(IllegalStateException::new);
+                logger.info("\nUser " + userForLog.getId() + " delete lecture with id " + id);
+            }
         }
         else{
             Professor user = getProfessorFromSecurityContext();
@@ -95,9 +106,14 @@ public class LectureService implements Service<Lecture>{
             int size= userLectures.stream().filter(lecture -> lecture.getUuid().equals(id)).toList().size();
             if(size >0){
                 lectureRepository.delete(id);
+                if (securityContext.getCallerPrincipal() != null){
+                    Professor userForLog = professorRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                            .orElseThrow(IllegalStateException::new);
+                    logger.info("\nUser " + userForLog.getId() + " delete lecture with id " + id);
+                }
             }
-
         }
+
     }
 
     private Professor getProfessorFromSecurityContext() {
@@ -114,6 +130,11 @@ public class LectureService implements Service<Lecture>{
 
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             lectureRepository.update(lecture);
+            if (securityContext.getCallerPrincipal() != null){
+                Professor userForLog = professorRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                        .orElseThrow(IllegalStateException::new);
+                logger.info("\nUser " + userForLog.getId() + " updated lecture with id " + lecture.getUuid());
+            }
         }
         else{
             Professor user = getProfessorFromSecurityContext();
@@ -121,9 +142,14 @@ public class LectureService implements Service<Lecture>{
             int size= userLectures.stream().filter(l -> l.getUuid().equals(lecture.getUuid())).toList().size();
             if(size >0){
                 lectureRepository.update(lecture);
+                if (securityContext.getCallerPrincipal() != null){
+                    Professor userForLog = professorRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                            .orElseThrow(IllegalStateException::new);
+                    logger.info("\nUser " + userForLog.getId() + " updated lecture with id " + lecture.getUuid());
+                }
             }
-
         }
+
     }
 
     public List<Lecture> getAllInit() {
